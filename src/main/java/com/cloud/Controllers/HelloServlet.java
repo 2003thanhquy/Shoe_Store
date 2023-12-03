@@ -1,4 +1,4 @@
-package com.cloud.cloud;
+package com.cloud.Controllers;
 
 import java.io.*;
 import javax.servlet.http.*;
