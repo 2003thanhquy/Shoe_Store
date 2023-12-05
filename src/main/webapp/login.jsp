@@ -23,7 +23,7 @@
 <body>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
   <div class="container">
-    <a href="index.html" class="navbar-brand">Cloud Shop</a>
+    <a href="index.jsp" class="navbar-brand">Cloud Shop</a>
   </div>
 </nav>
 
@@ -56,7 +56,7 @@
             <span class="h4">Account Login</span>
           </div>
           <div class="card-body">
-            <form action="index.html">
+            <form action="index.jsp">
               <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control">
