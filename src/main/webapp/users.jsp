@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Asus ROG
@@ -95,6 +96,91 @@
     </div>
 </section>
 
+<section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <!--<div class="col-md-3">
+                <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal">
+                    <i class="fas fa-plus"></i> Add Post
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
+                    <i class="fas fa-plus"></i> Add Category
+                </a>
+            </div>
+            -->
+            <div class="col-md-3">
+                <a href="#" class="btn btn-warning btn-block" data-toggle="modal" data-target="#addUserModal">
+                    <i class="fas fa-plus"></i> Add User
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Add User Modal-->
+<div class="modal fade" id="addUserModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title">Add User</h5>
+                <button class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="form-group">
+                        <label for="userID">User ID </label>
+                        <input type="text" id = "userID" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id = "name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday">Birthday</label>
+                        <input type="date" id = "birthday" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id = "address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" id = "phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id = "email" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id = "password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password2">Confirm Password</label>
+                        <input type="password" id = "password2" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <select id="role" class ="form-control">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--User Accounts-->
 <section id="userAccounts">
     <div class="container">
@@ -107,43 +193,36 @@
                     <table class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
-                            <th>#</th>
-                            <th>Name</th>
+                            <th>User ID</th>
+                            <th>FullName</th>
+                            <th>Birthdate</th>
+                            <th>Address</th>
+                            <th>Phone</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>jdoe@gmail.com</td>
+                            <c:forEach var = "User" items = "${listUser}">
+                                <tr >
+                            <td>${User.getUserID}</td>
+                            <td>${User.getFullName()}</td>
+                            <td>${User.getBirthDate()}</td>
+                            <td>${User.getAddress()}</td>
+                            <td>${User.getPhone()}</td>
+                            <td>${User.getEmail()}</td>
+                            <td>${User.getPassword()}</td>
+                            <td>${User.getRole()}</td>
                             <td>
                                 <a href="usersDetails.jsp" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
                                 </a>
                             </td>
+                            </c:forEach>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Harry White</td>
-                            <td>harrywhite@aol.com</td>
-                            <td>
-                                <a href="usersDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Brian Wood</td>
-                            <td>bwood@hotmail.com</td>
-                            <td>
-                                <a href="usersDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>

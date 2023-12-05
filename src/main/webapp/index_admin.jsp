@@ -88,16 +88,7 @@
                     <i class="fas fa-plus"></i> Add Post
                 </a>
             </div>
-            <div class="col-md-3">
-                <a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
-                    <i class="fas fa-plus"></i> Add Category
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="btn btn-warning btn-block" data-toggle="modal" data-target="#addUserModal">
-                    <i class="fas fa-plus"></i> Add User
-                </a>
-            </div>
+
         </div>
     </div>
 </section>
@@ -256,11 +247,11 @@
                 <form action="">
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control">
+                        <input type="text" id = "title" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
-                        <select name="" id="" class="form-control">
+                        <select name="" id="category" class="form-control">
                             <option value=""></option>
                             <option value="">Web Development</option>
                             <option value="">Tech Gadgets</option>
@@ -278,7 +269,7 @@
                     </div>
                     <div class="form-group">
                         <label for="body">Body</label>
-                        <textarea name="editor1" class="form-control"></textarea>
+                        <textarea name="editor1" id = "body" class="form-control"></textarea>
                     </div>
                 </form>
             </div>
@@ -289,67 +280,7 @@
     </div>
 </div>
 
-<!--Add Category Modal-->
-<div class="modal fade" id="addCategoryModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title">Add Category</h5>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!--Add User Modal-->
-<div class="modal fade" id="addUserModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-warning text-white">
-                <h5 class="modal-title">Add User</h5>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="password2">Confirm Password</label>
-                        <input type="password" class="form-control">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--jQuery CDN-->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
