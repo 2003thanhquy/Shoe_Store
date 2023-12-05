@@ -23,23 +23,23 @@
 <body>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
   <div class="container">
-    <a href="index.html" class="navbar-brand">Blogen</a>
+    <a href="index.jsp" class="navbar-brand">Blogen</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav">
         <li class="nav-item px-2">
-          <a href="index.html" class="nav-link">Dashboard</a>
+          <a href="index.jsp" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item px-2">
-          <a href="posts.html" class="nav-link">Posts</a>
+          <a href="posts.jsp" class="nav-link">Posts</a>
         </li>
         <li class="nav-item px-2">
-          <a href="categories.html" class="nav-link active">Categories</a>
+          <a href="categories.jsp" class="nav-link active">Categories</a>
         </li>
         <li class="nav-item px-2">
-          <a href="users.html" class="nav-link">Users</a>
+          <a href="users.jsp" class="nav-link">Users</a>
         </li>
       </ul>
 
@@ -50,16 +50,16 @@
             <!--Placeholder Username-->
           </a>
           <div class="dropdown-menu">
-            <a href="profile.html" class="dropdown-item">
+            <a href="profile.jsp" class="dropdown-item">
               <i class="fas fa-user-circle"></i> Profile
             </a>
-            <a href="settings.html" class="dropdown-item">
+            <a href="settings.jsp" class="dropdown-item">
               <i class="fas fa-cog"></i> Settings
             </a>
           </div>
         </li>
         <li class="nav-item">
-          <a href="login.html" class="nav-link">
+          <a href="login.jsp" class="nav-link">
             <i class="fas fa-user-times"></i> Logout
           </a>
         </li>
@@ -119,7 +119,7 @@
               <td>Tech Gadgets</td>
               <td>November 22 2020</td>
               <td>
-                <a href="categoriesDetails.html" class="btn btn-secondary">
+                <a href="categoriesDetails.jsp" class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
@@ -129,7 +129,7 @@
               <td>Business</td>
               <td>November 18 2020</td>
               <td>
-                <a href="categoriesDetails.html" class="btn btn-secondary">
+                <a href="categoriesDetails.jsp" class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
@@ -139,7 +139,7 @@
               <td>Web Development</td>
               <td>November 15 2020</td>
               <td>
-                <a href="categoriesDetails.html" class="btn btn-secondary">
+                <a href="categoriesDetails.jsp" class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
@@ -149,7 +149,7 @@
               <td>Health & Wellness</td>
               <td>November 5 2020</td>
               <td>
-                <a href="categoriesDetails.html" class="btn btn-secondary">
+                <a href="categoriesDetails.jsp" class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
