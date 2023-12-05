@@ -94,7 +94,42 @@
     </div>
   </div>
 </section>
+<!--Actions-->
+<section id="actions" class="py-4 mb-4 bg-light">
+  <div class="container">
+      <div class="col-md-3">
+        <a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
+          <i class="fas fa-plus"></i> Add Category
+        </a>
+      </div>
+  </div>
+</section>
 
+
+<!--Add Category Modal-->
+<div class="modal fade" id="addCategoryModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Add Category</h5>
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id = "title" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" data-dismiss="modal">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!--Categories-->
 <section id="categories">
   <div class="container">

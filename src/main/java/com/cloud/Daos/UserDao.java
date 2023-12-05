@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    String sqlInsert = "INSERT INTO Users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    String sqlGetAll = "SELECT * FROM Users";
-    String sqlUpdate = "UPDATE Users SET FullName = ?, BirthDate = ?, Address = ?, Phone = ?, Email = ?, Password = ?, Role = ? WHERE UserID = ?";
+    String sqlInsert = "INSERT INTO users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String sqlGetAll = "SELECT * FROM users";
+    String sqlUpdate = "UPDATE users SET FullName = ?, BirthDate = ?, Address = ?, Phone = ?, Email = ?, Password = ?, Role = ? WHERE UserID = ?";
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
