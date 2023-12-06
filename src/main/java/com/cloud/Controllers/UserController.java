@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.cloud.Models.User;
 import com.cloud.Daos.UserDao;
-@WebServlet("/UserController")
+@WebServlet("/")
 public class UserController extends HttpServlet{
     private static final long serialVersionUID = 1L;
     private  UserDao userDao;
@@ -29,8 +29,18 @@ public class UserController extends HttpServlet{
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action  = request.getServletPath();
         try {
-            listUser(request, response);
+            switch (action)
+            {
+                case "/list_UserController" :
+                    listUser(request, response);
+                    break;
+                default:
+                    break;
+
+            }
+
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }

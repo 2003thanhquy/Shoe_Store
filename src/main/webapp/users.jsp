@@ -200,21 +200,20 @@
                             <th>Phone</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th></th>
+                            <th>    </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <c:forEach var = "User" items = "${listUser}">
+                            <c:forEach var = "user" items = "${listUser}">
                                 <tr >
-                            <td>${User.getUserID}</td>
-                            <td>${User.getFullName()}</td>
-                            <td>${User.getBirthDate()}</td>
-                            <td>${User.getAddress()}</td>
-                            <td>${User.getPhone()}</td>
-                            <td>${User.getEmail()}</td>
-                            <td>${User.getPassword()}</td>
-                            <td>${User.getRole()}</td>
+                            <td>${user.userID}</td>
+                            <td>${user.fullName}</td>
+                            <td>${user.birthDate}</td>
+                            <td>${user.address}</td>
+                            <td>${user.phone}</td>
+                            <td>${user.email}</td>
+                            <td>${user.role}</td>
                             <td>
                                 <a href="usersDetails.jsp" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details

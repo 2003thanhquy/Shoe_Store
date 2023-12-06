@@ -85,7 +85,7 @@
         <div class="row">
             <div class="col-md-3">
                 <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal">
-                    <i class="fas fa-plus"></i> Add Post
+                    <i class="fas fa-plus"></i> Add
                 </a>
             </div>
 
@@ -210,7 +210,7 @@
                         <h4 class="display-4">
                             <i class="fas fa-users"></i> 4
                         </h4>
-                        <a href="users.jsp" class="btn btn-outline-light btn-sm">View</a>
+                        <a href="<%= request.getContextPath() %>/list_UserController" class="btn btn-outline-light btn-sm">View</a>
                     </div>
                 </div>
             </div>
