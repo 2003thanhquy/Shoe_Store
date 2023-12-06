@@ -131,59 +131,56 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="<%= request.getContextPath() %>/insert_UserController" method="post">
+
                     <div class="form-group">
-                        <label for="userID">User ID </label>
-                        <input type="text" id = "userID" class="form-control">
+                        <label for="FullName">Full Name</label>
+                        <input type="text" id = "FullName" name ="FullName" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id = "name" class="form-control">
+                        <label for="BirthDate">Birthday</label>
+                        <input type="date" id = "BirthDate"  name ="BirthDate" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="birthday">Birthday</label>
-                        <input type="date" id = "birthday" class="form-control">
+                        <label for="Address">Address</label>
+                        <input type="text" id = "Address"  name = "Address" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" id = "address" class="form-control">
+                        <label for="Phone">Phone</label>
+                        <input type="text" id = "Phone" name = "Phone" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="text" id = "phone" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id = "email" class="form-control">
+                        <label for="Email">Email</label>
+                        <input type="email" id = "Email"  name = "Email" class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id = "password" class="form-control">
+                        <label for="Password">Password</label>
+                        <input type="password" id = "Password" name = "Password" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="password2">Confirm Password</label>
                         <input type="password" id = "password2" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <select id="role" class ="form-control">
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
+                        <label for="Role">Role</label>
+                        <select id="Role" name = "Role" class ="form-control">
+                            <option value="Customer">Customer</option>
+                            <option value="Manager">Manager</option>
                         </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type = "submit" class="btn btn-warning">Save Add</button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
-            </div>
+
         </div>
     </div>
 </div>
-
 <!--User Accounts-->
 <section id="userAccounts">
-    <div class="container">
+    <div class="container" style="white-space:nowrap;">
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -193,21 +190,22 @@
                     <table class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
-                            <th>User ID</th>
+                            <th>UserID</th>
                             <th>FullName</th>
-                            <th>Birthdate</th>
-                            <th>Address</th>
+                            <th style="white-space:nowrap;" >Birthdate</th>
+                            <th style="white-space:nowrap;">Address</th>
                             <th>Phone</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>    </th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <c:forEach var = "user" items = "${listUser}">
                                 <tr >
-                            <td>${user.userID}</td>
+                            <td name="UserID" value ="${user.userID}">${user.userID}</td>
                             <td>${user.fullName}</td>
                             <td>${user.birthDate}</td>
                             <td>${user.address}</td>
@@ -217,6 +215,11 @@
                             <td>
                                 <a href="usersDetails.jsp" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
+                                </a>
+                            </td>
+                            <td>
+                                <a href="delete_UserController?UserID=<c:out value='${user.userID}' />" class="btn btn-secondary" style="background-color:indianred">
+                                    <i class="fas fa-angle-double-right"></i> Delete
                                 </a>
                             </td>
                             </c:forEach>

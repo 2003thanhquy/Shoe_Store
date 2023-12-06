@@ -15,6 +15,21 @@ public class User implements Serializable {
     private String password;
     private String role;
 
+    public User()
+    {
+        super();
+    }
+
+    public User( String fullName, Date birthDate, String address, String phone, String email, String password, String role) {
+
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
     // Getters and Setters
     public int getUserID() {
         return userID;
