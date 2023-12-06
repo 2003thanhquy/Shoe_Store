@@ -39,7 +39,7 @@
                     <a href="categories.jsp" class="nav-link">Categories</a>
                 </li>
                 <li class="nav-item px-2">
-                    <a href="users.jsp" class="nav-link">Users</a>
+                    <a href="<%= request.getContextPath() %>/list_UserController" class="nav-link">Users</a>
                 </li>
             </ul>
 
