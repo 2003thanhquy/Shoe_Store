@@ -14,7 +14,7 @@ public class UserDao {
     String sqlInsert = "INSERT INTO users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
     String sqlGetAll = "SELECT * FROM users";
     String sqlUpdate = "UPDATE users SET FullName = ?, BirthDate = ?, Address = ?, Phone = ?, Email = ?, Password = ?, Role = ? WHERE UserID = ?";
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers () {
         List<User> users = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
 
@@ -29,7 +29,6 @@ public class UserDao {
                 user.setAddress(rs.getString("Address"));
                 user.setPhone(rs.getString("Phone"));
                 user.setEmail(rs.getString("Email"));
-                user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 users.add(user);
             }
