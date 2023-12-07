@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -112,26 +113,44 @@
                         <h4>Edit Profile</h4>
                     </div>
                     <div class="card-body">
-                        <form action="">
+                        <form action="<%= request.getContextPath() %>/update_UserController" method = "post">
+                            <input type="hidden" name="from" value="profile">
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name" class="form-control" value="">
+                                <label for="UserID">User ID</label>
+                                <input readonly type="text" value="${userLogin.userID}" id = "UserID" name ="UserID"  class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" class="form-control" value="">
+                                <label for="FullName">Name</label>
+                                <input type="text" id="FullName" name="FullName" class="form-control" value="${userLogin.fullName}">
+                            </div>
+                            <div class="form-group">
+                                <label for="Email">Email</label>
+                                <input type="email" value="${userLogin.email}" id = "Email"  name = "Email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="BirthDate">Birthday</label>
-                                <input type="date" value="" id = "BirthDate"  name ="BirthDate" class="form-control">
+                                <input type="date" value="${userLogin.birthDate}" id = "BirthDate"  name ="BirthDate" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="Address">Address</label>
-                                <input type="text" value="" id = "Address"  name = "Address" class="form-control">
+                                <input type="text" value="${userLogin.address}" id = "Address"  name = "Address" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="Phone">Phone</label>
-                                <input type="text" value="" id = "Phone" name = "Phone" class="form-control">
+                                <input type="text" value="${userLogin.phone}" id = "Phone" name = "Phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Role">Role</label>
+                                <select id="Role" class ="form-control" disabled>
+                                    <option value="Customer" ${userLogin.role == 'Customer' ? 'selected' : ''}>Customer</option>
+                                    <option value="Manager" ${userLogin.role == 'Manager' ? 'selected' : ''}>Manager</option>
+                                    <input type="hidden" name="Role" value="${userLogin.role}">
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success btn-block">
+                                    Save Changes
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -169,15 +188,15 @@
                 <form action="">
                     <div class="form-group">
                         <label for="oldPassword">Old Password</label>
-                        <input type="password" name="oldPassword" class="form-control">
+                        <input type="password" id="oldPassword" name="oldPassword" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
-                        <input type="password" name="newPassword" class="form-control">
+                        <input type="password" id="newPassword" name="newPassword" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="confirmNew">Confirm New Password</label>
-                        <input type="password" name="confirmNew" class="form-control">
+                        <input type="password" id="confirmNew" name="confirmNew" class="form-control">
                     </div>
                 </form>
             </div>
