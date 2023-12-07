@@ -70,11 +70,6 @@ public class ProductController extends HttpServlet {
 
         HttpSession session = request.getSession();
         List<Product> listProduct = productDao.getAllProducts();
-        for (Product product : listProduct) {
-            System.out.println("Product Name: " + product.getName());
-            // Add more attributes as needed
-            System.out.println("---------------------");
-        }
         request.setAttribute("listProduct", listProduct);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index_admin.jsp");
         dispatcher.forward(request, response);
