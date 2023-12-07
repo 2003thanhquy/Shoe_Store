@@ -49,8 +49,9 @@ public class UserController extends HttpServlet{
                 case "/edit_UserController":
                     showEditForm(request, response);
                     break;
-                case "update_UserController":
+                case "/update_UserController":
                     updateUser(request, response);
+                    break;
                 case "/delete_UserController":
                     deleteUser(request, response);
                     break;
