@@ -35,6 +35,9 @@ public class UserController extends HttpServlet{
         try {
             switch (action)
             {
+                case "/login":
+                    loginUser(request, response);
+                    break;
                 case "/list_UserController" :
                     listUser(request, response);
                     break;
@@ -82,7 +85,29 @@ public class UserController extends HttpServlet{
             int UserID = Integer.parseInt(request.getParameter("UserID"));
             userDao.deleteUser(UserID);
             response.sendRedirect("list_UserController");
-
     }
+    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 
+        String Email = request.getParameter("email");
+        String Password = request.getParameter("password");
+        User user = new User();
+        user.setEmail(Email);
+        user.setPassword(Password);
+        int id = userDao.loginUser(user);
+        if(id != -1)
+        {
+            HttpSession session = request.getSession();
+            session.setAttribute("userLogin", id);
+            response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
+        }
+        else {
+            request.setAttribute("errMsg", "Thong tin dang nhap khong chinh xac");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            try{
+                dispatcher.forward(request, response);
+            }catch (ServletException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
