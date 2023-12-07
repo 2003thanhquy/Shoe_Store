@@ -102,8 +102,8 @@ public class UserController extends HttpServlet{
         {
             user = userDao.selectUserById(id);
             HttpSession session = request.getSession();
-            session.setAttribute("userLogin", id);
-            if(user.getRole().equals("manager"))
+            session.setAttribute("userLogin", user);
+            if(user.getRole().equals("Manager") || user.getRole().equals("manager"))
                 response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
             else
                 response.sendRedirect(request.getContextPath()+"/index.jsp");
@@ -129,6 +129,7 @@ public class UserController extends HttpServlet{
 
     }
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        request.setCharacterEncoding("UTF-8");
         int userID = Integer.parseInt(request.getParameter("UserID"));
         String FullName = request.getParameter("FullName");
         String birthDateString = request.getParameter("BirthDate");
@@ -139,7 +140,17 @@ public class UserController extends HttpServlet{
         String Password = request.getParameter("Password");
         String Role = request.getParameter("Role");
         User updateuser = new User( userID ,FullName, birthDate,Address, Phone, Email,Password,Role);
-        userDao.updateUser(updateuser );
-        response.sendRedirect("list_UserController");
+        userDao.updateUser(updateuser);
+        String from = request.getParameter("from");
+        if ("profile".equals(from)) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
+            try{
+                dispatcher.forward(request, response);
+            }catch (ServletException e) {
+                e.printStackTrace();
+            }
+        } else if ("userDetails".equals(from)) {
+            response.sendRedirect("list_UserController");
+        }
     }
 }

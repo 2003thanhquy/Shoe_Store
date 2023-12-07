@@ -123,7 +123,7 @@
                     </div>
                     <div class="modal-body" >
                         <form action="<%= request.getContextPath() %>/update_UserController" method = "post" >
-
+                            <input type="hidden" name="from" value="userDetails">
                             <div class="form-group">
                                 <label for="UserID">User ID</label>
                                 <!--
