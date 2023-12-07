@@ -87,33 +87,36 @@ public class UserController extends HttpServlet{
         response.sendRedirect("list_UserController");
     }
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-
-            int UserID = Integer.parseInt(request.getParameter("UserID"));
-            userDao.deleteUser(UserID);
-            response.sendRedirect("list_UserController");
+        int UserID = Integer.parseInt(request.getParameter("UserID"));
+        userDao.deleteUser(UserID);
+        response.sendRedirect("list_UserController");
     }
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String Email = request.getParameter("email");
-                String Password = request.getParameter("password");
-                User user = new User();
-                user.setEmail(Email);
-                user.setPassword(Password);
-                int id = userDao.loginUser(user);
-                if(id != -1)
-                {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("userLogin", id);
-                    response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
-                }
-                else {
-                    request.setAttribute("errMsg", "Thong tin dang nhap khong chinh xac");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-                    try{
-                        dispatcher.forward(request, response);
-                    }catch (ServletException e) {
-                        e.printStackTrace();
-                    }
-                }
+        String Password = request.getParameter("password");
+        User user = new User();
+        user.setEmail(Email);
+        user.setPassword(Password);
+        int id = userDao.loginUser(user);
+        if(id != -1)
+        {
+            user = userDao.selectUserById(id);
+            HttpSession session = request.getSession();
+            session.setAttribute("userLogin", id);
+            if(user.getRole().equals("manager"))
+                response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
+            else
+                response.sendRedirect(request.getContextPath()+"/index.jsp");
+        }
+        else {
+            request.setAttribute("errMsg", "Thong tin dang nhap khong chinh xac");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            try{
+                dispatcher.forward(request, response);
+            }catch (ServletException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)

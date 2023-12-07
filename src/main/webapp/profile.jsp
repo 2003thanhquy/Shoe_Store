@@ -115,29 +115,30 @@
                         <form action="">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" value="Palavan">
+                                <input type="text" id="name" name="name" class="form-control" value="">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" value="palavan@aol.com">
+                                <input type="email" id="email" name="email" class="form-control" value="">
                             </div>
                             <div class="form-group">
-                                <label for="bio">Name</label>
-                                <textarea name="editor1"
-                                          id="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique commodi ullam dolores amet reiciendis, vero nisi atque deleniti nam incidunt quam sunt. Dolor est quaerat unde maxime! Dignissimos reiciendis, accusamus voluptates nam totam, aut minus, quaerat ducimus doloremque quod corrupti asperiores minima consequatur? Architecto facilis id incidunt repellat, perferendis dolore.</textarea>
+                                <label for="BirthDate">Birthday</label>
+                                <input type="date" value="" id = "BirthDate"  name ="BirthDate" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">Address</label>
+                                <input type="text" value="" id = "Address"  name = "Address" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Phone">Phone</label>
+                                <input type="text" value="" id = "Phone" name = "Phone" class="form-control">
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 text-center">
-                <span class="h3">Profile Picture</span>
-                <img src="images/avatar.png" class="img-fluid mb-3" alt="your profile picture">
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#uploadImageModal">Edit
-                    Image</button>
-                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteImageModal">Delete Image</button>
-            </div>
         </div>
+    </div>
 </section>
 
 <!--Footer-->
@@ -153,56 +154,6 @@
         </div>
     </div>
 </footer>
-
-<!--Modals-->
-<!--Upload Image Modal-->
-<div class="modal fade" id="uploadImageModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <span class="modal-title h5">Choose Image</span>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <div class="form-group">
-                        <label for="image">Upload Image</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="image">
-                            <label for="image" class="custom-file-label">Choose File</label>
-                        </div>
-                        <small class="form-text text-muted">Max Size 3mb</small>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Delete Image Modal-->
-<div class="modal fade" id="deleteImageModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-warning text-white">
-                <span class="modal-title h5">Delete Profile Image</span>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <span class="h5">Are you sure you wish to delete your profile picture?</span>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning" data-dismiss="modal">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--Change Password Modal-->
 <div class="modal fade" id="changePasswordModal">
