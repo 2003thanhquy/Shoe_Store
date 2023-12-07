@@ -16,6 +16,21 @@ public class Product implements Serializable {
     private Date dateAdd;
     private int categoryID;
 
+    public Product()
+    {
+        super();
+    }
+
+    public Product(String name, String description, BigDecimal price, int stock, byte[] image, Date dateAdd, int categoryID) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.image = image;
+        this.dateAdd = dateAdd;
+        this.categoryID = categoryID;
+    }
+
     // Getters and Setters
     public int getProductID() {
         return productID;

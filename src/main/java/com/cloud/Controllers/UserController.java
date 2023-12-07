@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import com.cloud.Models.User;
 import com.cloud.Daos.UserDao;
-@WebServlet("/")
+@WebServlet("/user/*")
 public class UserController extends HttpServlet{
     private static final long serialVersionUID = 1L;
     private  UserDao userDao;
@@ -31,7 +31,7 @@ public class UserController extends HttpServlet{
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action  = request.getServletPath();
+        String action  = request.getPathInfo();
         try {
             switch (action)
             {
@@ -81,7 +81,7 @@ public class UserController extends HttpServlet{
 
             int UserID = Integer.parseInt(request.getParameter("UserID"));
             userDao.deleteUser(UserID);
-            response.sendRedirect("list_UserController");
+            response.sendRedirect("user/list_UserController");
 
     }
 
