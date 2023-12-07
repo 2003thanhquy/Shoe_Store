@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import com.cloud.Models.User;
 import com.cloud.Daos.UserDao;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
+
 @WebServlet("/")
 public class UserController extends HttpServlet{
     private static final long serialVersionUID = 1L;
@@ -42,7 +44,10 @@ public class UserController extends HttpServlet{
                     insertUser(request, response);
                     break;
                 case "/edit_UserController":
+                    showEditForm(request, response);
                     break;
+                case "update_UserController":
+                    updateUser(request, response);
                 case "/delete_UserController":
                     deleteUser(request, response);
                     break;
@@ -84,5 +89,30 @@ public class UserController extends HttpServlet{
             response.sendRedirect("list_UserController");
 
     }
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+        int userID = Integer.parseInt(request.getParameter("UserID"));
+        User existuser = userDao.selectUserById(userID );
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/usersDetails.jsp");
+        request.setAttribute("User", existuser);
+        dispatcher.forward(request, response);
+
+    }
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int userID = Integer.parseInt(request.getParameter("UserID"));
+        String FullName = request.getParameter("FullName");
+        String birthDateString = request.getParameter("BirthDate");
+        java.sql.Date birthDate = java.sql.Date.valueOf(birthDateString);
+        String Address =  request.getParameter("Address");
+        String Phone = request.getParameter("Phone");
+        String Email = request.getParameter("Email");
+        String Password = request.getParameter("Password");
+        String Role = request.getParameter("Role");
+        User updateuser = new User( userID ,FullName, birthDate,Address, Phone, Email,Password,Role);
+        userDao.updateUser(updateuser );
+        response.sendRedirect("list_UserController");
+    }
+
 
 }

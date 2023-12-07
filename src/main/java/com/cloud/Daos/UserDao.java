@@ -15,6 +15,7 @@ public class UserDao {
     String sqlGetAll = "SELECT * FROM users";
     String sqlUpdate = "UPDATE users SET FullName = ?, BirthDate = ?, Address = ?, Phone = ?, Email = ?, Password = ?, Role = ? WHERE UserID = ?";
     String DELETE_User_By_UserID = "DELETE FROM users WHERE UserID = ?";
+    String Select_User_By_UserID = "SELECT * FROM Users WHERE UserID = ?";
     public List<User> getAllUsers () {
         List<User> users = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
@@ -64,9 +65,10 @@ public class UserDao {
         }
         return true;
     }
-    public boolean updateUser(User user) {
+    public boolean updateUser(User user) throws SQLException {
         Connection conn = JDBCUtil.getConnection();
         try {
+
             PreparedStatement ps = conn.prepareStatement(sqlUpdate);
             ps.setString(1, user.getFullName());
             ps.setDate(2, new java.sql.Date(user.getBirthDate().getTime()));
@@ -94,6 +96,32 @@ public class UserDao {
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;
+    }
+
+    public User selectUserById(int userId) {
+        User user = null;
+        Connection conn = JDBCUtil.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(Select_User_By_UserID);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setUserID(rs.getInt("UserID"));
+                user.setFullName(rs.getString("FullName"));
+                user.setBirthDate(rs.getDate("BirthDate"));
+                user.setAddress(rs.getString("Address"));
+                user.setPhone(rs.getString("Phone"));
+                user.setEmail(rs.getString("Email"));
+                user.setRole(rs.getString("Role"));
+            }
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return user;
     }
 
 }

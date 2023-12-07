@@ -19,7 +19,16 @@ public class User implements Serializable {
     {
         super();
     }
-
+    public User(int userID, String fullName, Date birthDate, String address, String phone, String email, String password, String role) {
+        this.userID = userID;
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
     public User( String fullName, Date birthDate, String address, String phone, String email, String password, String role) {
 
         this.fullName = fullName;
@@ -30,6 +39,7 @@ public class User implements Serializable {
         this.password = password;
         this.role = role;
     }
+
     // Getters and Setters
     public int getUserID() {
         return userID;
