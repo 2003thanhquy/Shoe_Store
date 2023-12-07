@@ -16,6 +16,7 @@ public class UserDao {
     String sqlUpdate = "UPDATE users SET FullName = ?, BirthDate = ?, Address = ?, Phone = ?, Email = ?, Password = ?, Role = ? WHERE UserID = ?";
     String DELETE_User_By_UserID = "DELETE FROM users WHERE UserID = ?";
     String Select_User_By_UserID = "SELECT * FROM Users WHERE UserID = ?";
+    String sqlLogin = "SELECT UserID FROM users WHERE Email = ? and password = ?";
     public List<User> getAllUsers () {
         List<User> users = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
@@ -124,4 +125,25 @@ public class UserDao {
         return user;
     }
 
+    public int loginUser(User user) throws SQLException{
+        int id = -1;
+        Connection conn = JDBCUtil.getConnection();
+        try
+        {
+            PreparedStatement statement = conn.prepareStatement(sqlLogin);
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                id = rs.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+            return -1;
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return id;
+    }
 }
