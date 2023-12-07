@@ -94,6 +94,7 @@
                     <i class="fas fa-arrow-left"></i> Back To Users
                 </a>
             </div>
+            <!--
             <div class="col-md-3">
                 <a href="users.jsp"  class="btn btn-success btn-block">
                     <i class="fas fa-check"></i> Save Changes
@@ -104,6 +105,7 @@
                     <i class="fas fa-trash"></i> Delete Changes
                 </a>
             </div>
+            -->
         </div>
     </div>
 </section>
@@ -120,15 +122,18 @@
                         <h4>Edit User Information</h4>
                     </div>
                     <div class="modal-body" >
-                        <form action="update_UserController" method = "post" >
+                        <form action="<%= request.getContextPath() %>/update_UserController" method = "post" >
+
                             <div class="form-group">
                                 <label for="UserID">User ID</label>
-                                <!-- Có hai cách lấy giá trị cho value:
+                                <!--
+                                Có hai cách lấy giá trị cho value:
                                     value="<c:out value='${User.userID}' />"
                                     value="${User.fullName}"
                                  -->
-                                <input type="text" value="<c:out value='${User.userID}' />" id = "UserID" name ="UserID"  class="form-control">
+                                <input readonly type="text" value="<c:out value='${User.userID}' />" id = "UserID" name ="UserID"  class="form-control">
                             </div>
+
                             <div class="form-group">
                                 <label for="FullName">Full Name</label>
                                 <input type="text" value="${User.fullName}" id = "FullName" name ="FullName" class="form-control">
@@ -164,6 +169,12 @@
                                     <option value="Manager" ${User.role == 'Manager' ? 'selected' : ''}>Manager</option>
                                 </select>
                             </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success btn-block">
+                                    Save Changes
+                                </button>
+                            </div>
+
                         </form>
 
                     </div>
