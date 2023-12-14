@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -112,32 +113,51 @@
                         <h4>Edit Profile</h4>
                     </div>
                     <div class="card-body">
-                        <form action="">
+                        <form action="<%= request.getContextPath() %>/update_UserController" method = "post">
+                            <input type="hidden" name="from" value="profile">
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" value="Palavan">
+                                <label for="UserID">User ID</label>
+                                <input readonly type="text" value="${userLogin.userID}" id = "UserID" name ="UserID"  class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" value="palavan@aol.com">
+                                <label for="FullName">Name</label>
+                                <input type="text" id="FullName" name="FullName" class="form-control" value="${userLogin.fullName}">
                             </div>
                             <div class="form-group">
-                                <label for="bio">Name</label>
-                                <textarea name="editor1"
-                                          id="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique commodi ullam dolores amet reiciendis, vero nisi atque deleniti nam incidunt quam sunt. Dolor est quaerat unde maxime! Dignissimos reiciendis, accusamus voluptates nam totam, aut minus, quaerat ducimus doloremque quod corrupti asperiores minima consequatur? Architecto facilis id incidunt repellat, perferendis dolore.</textarea>
+                                <label for="Email">Email</label>
+                                <input type="email" value="${userLogin.email}" id = "Email"  name = "Email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="BirthDate">Birthday</label>
+                                <input type="date" value="${userLogin.birthDate}" id = "BirthDate"  name ="BirthDate" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">Address</label>
+                                <input type="text" value="${userLogin.address}" id = "Address"  name = "Address" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Phone">Phone</label>
+                                <input type="text" value="${userLogin.phone}" id = "Phone" name = "Phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Role">Role</label>
+                                <select id="Role" class ="form-control" disabled>
+                                    <option value="Customer" ${userLogin.role == 'Customer' ? 'selected' : ''}>Customer</option>
+                                    <option value="Manager" ${userLogin.role == 'Manager' ? 'selected' : ''}>Manager</option>
+                                    <input type="hidden" name="Role" value="${userLogin.role}">
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success btn-block">
+                                    Save Changes
+                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 text-center">
-                <span class="h3">Profile Picture</span>
-                <img src="images/avatar.png" class="img-fluid mb-3" alt="your profile picture">
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#uploadImageModal">Edit
-                    Image</button>
-                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteImageModal">Delete Image</button>
-            </div>
         </div>
+    </div>
 </section>
 
 <!--Footer-->
@@ -154,56 +174,6 @@
     </div>
 </footer>
 
-<!--Modals-->
-<!--Upload Image Modal-->
-<div class="modal fade" id="uploadImageModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <span class="modal-title h5">Choose Image</span>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <div class="form-group">
-                        <label for="image">Upload Image</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="image">
-                            <label for="image" class="custom-file-label">Choose File</label>
-                        </div>
-                        <small class="form-text text-muted">Max Size 3mb</small>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Delete Image Modal-->
-<div class="modal fade" id="deleteImageModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-warning text-white">
-                <span class="modal-title h5">Delete Profile Image</span>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <span class="h5">Are you sure you wish to delete your profile picture?</span>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning" data-dismiss="modal">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!--Change Password Modal-->
 <div class="modal fade" id="changePasswordModal">
     <div class="modal-dialog modal-lg">
@@ -218,15 +188,15 @@
                 <form action="">
                     <div class="form-group">
                         <label for="oldPassword">Old Password</label>
-                        <input type="password" name="oldPassword" class="form-control">
+                        <input type="password" id="oldPassword" name="oldPassword" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
-                        <input type="password" name="newPassword" class="form-control">
+                        <input type="password" id="newPassword" name="newPassword" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="confirmNew">Confirm New Password</label>
-                        <input type="password" name="confirmNew" class="form-control">
+                        <input type="password" id="confirmNew" name="confirmNew" class="form-control">
                     </div>
                 </form>
             </div>

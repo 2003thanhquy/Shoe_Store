@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.cloud.Models.User" %><%--
   Created by IntelliJ IDEA.
   User: Asus ROG
   Date: 12/3/2023
@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -93,8 +94,9 @@
                     <i class="fas fa-arrow-left"></i> Back To Users
                 </a>
             </div>
+            <!--
             <div class="col-md-3">
-                <a href="users.jsp" class="btn btn-success btn-block">
+                <a href="users.jsp"  class="btn btn-success btn-block">
                     <i class="fas fa-check"></i> Save Changes
                 </a>
             </div>
@@ -103,9 +105,12 @@
                     <i class="fas fa-trash"></i> Delete Changes
                 </a>
             </div>
+            -->
         </div>
     </div>
 </section>
+
+
 
 <!--Details-->
 <section id="details">
@@ -116,25 +121,62 @@
                     <div class="card-header">
                         <h4>Edit User Information</h4>
                     </div>
-                    <div class="modal-body">
-                        <form action="">
+                    <div class="modal-body" >
+                        <form action="<%= request.getContextPath() %>/update_UserController" method = "post" >
+                            <input type="hidden" name="from" value="userDetails">
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control">
+                                <label for="UserID">User ID</label>
+                                <!--
+                                Có hai cách lấy giá trị cho value:
+                                    value="<c:out value='${User.userID}' />"
+                                    value="${User.fullName}"
+                                 -->
+                                <input readonly type="text" value="<c:out value='${User.userID}' />" id = "UserID" name ="UserID"  class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="FullName">Full Name</label>
+                                <input type="text" value="${User.fullName}" id = "FullName" name ="FullName" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control">
+                                <label for="BirthDate">Birthday</label>
+                                <input type="date" value="${User.birthDate}" id = "BirthDate"  name ="BirthDate" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control">
+                                <label for="Address">Address</label>
+                                <input type="text" value="${User.address}" id = "Address"  name = "Address" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Phone">Phone</label>
+                                <input type="text" value="${User.phone}" id = "Phone" name = "Phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Email">Email</label>
+                                <input type="email" value="${User.email}" id = "Email"  name = "Email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" value="${User.password}" id = "Password" name = "Password" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="password2">Confirm Password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" id = "password2" class="form-control">
                             </div>
+                            <div class="form-group">
+                                <label for="Role">Role</label>
+                                <select id="Role" name = "Role" class ="form-control">
+                                    <option value="Customer" ${User.role == 'Customer' ? 'selected' : ''}>Customer</option>
+                                    <option value="Manager" ${User.role == 'Manager' ? 'selected' : ''}>Manager</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success btn-block">
+                                    Save Changes
+                                </button>
+                            </div>
+
                         </form>
+
                     </div>
                 </div>
             </div>

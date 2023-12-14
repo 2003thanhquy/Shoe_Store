@@ -213,7 +213,7 @@
                             <td>${user.email}</td>
                             <td>${user.role}</td>
                             <td>
-                                <a href="usersDetails.jsp" class="btn btn-secondary">
+                                <a href="edit_UserController?UserID=<c:out value='${user.userID}' />"  class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
                                 </a>
                             </td>

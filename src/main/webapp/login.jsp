@@ -56,14 +56,14 @@
             <span class="h4">Account Login</span>
           </div>
           <div class="card-body">
-            <form action="index.jsp">
+            <form action="<%= request.getContextPath() %>/login" method="post">
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control">
+                <input type="email" id="email" name ="email" class="form-control">
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control">
+                <input type="password" id= "password" name ="password" class="form-control">
               </div>
               <input type="submit" value="Login" class="btn btn-primary btn-block">
             </form>

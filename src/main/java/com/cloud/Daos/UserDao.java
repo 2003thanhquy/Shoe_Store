@@ -13,8 +13,10 @@ import java.util.List;
 public class UserDao {
     String sqlInsert = "INSERT INTO users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
     String sqlGetAll = "SELECT * FROM users";
-    String sqlUpdate = "UPDATE users SET FullName = ?, BirthDate = ?, Address = ?, Phone = ?, Email = ?, Password = ?, Role = ? WHERE UserID = ?";
+    String sqlUpdate = "UPDATE users SET FullName = N?, BirthDate = ?, Address = N?, Phone = ?, Email = ?, Role = ? WHERE UserID = ?";
     String DELETE_User_By_UserID = "DELETE FROM users WHERE UserID = ?";
+    String Select_User_By_UserID = "SELECT * FROM Users WHERE UserID = ?";
+    String sqlLogin = "SELECT UserID FROM users WHERE Email = ? and password = ?";
     public List<User> getAllUsers () {
         List<User> users = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
@@ -64,7 +66,7 @@ public class UserDao {
         }
         return true;
     }
-    public boolean updateUser(User user) {
+    public boolean updateUser(User user) throws SQLException {
         Connection conn = JDBCUtil.getConnection();
         try {
             PreparedStatement ps = conn.prepareStatement(sqlUpdate);
@@ -73,9 +75,28 @@ public class UserDao {
             ps.setString(3, user.getAddress());
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getEmail());
-            ps.setString(6, user.getPassword());
-            ps.setString(7, user.getRole());
-            ps.setInt(8, user.getUserID());
+            ps.setString(6, user.getRole());
+            ps.setInt(7, user.getUserID());
+            System.out.println(ps);
+            int rowsUpdated = ps.executeUpdate();
+            if(user.getPassword() != null && !user.getPassword().equals(""))
+                updateUserPassword(user);
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return false;
+    }
+    public boolean updateUserPassword(User user) throws SQLException {
+        Connection conn = JDBCUtil.getConnection();
+        String sqlUpdatePass = "UPDATE users SET Password = ? WHERE UserID = ?";
+        try {
+
+            PreparedStatement ps = conn.prepareStatement(sqlUpdatePass);
+            ps.setString(1, user.getPassword());
+            ps.setInt(2, user.getUserID());
             int rowsUpdated = ps.executeUpdate();
             return rowsUpdated > 0;
         } catch (SQLException e) {
@@ -96,4 +117,51 @@ public class UserDao {
         return rowDeleted;
     }
 
+    public User selectUserById(int userId) {
+        User user = null;
+        Connection conn = JDBCUtil.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(Select_User_By_UserID);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setUserID(rs.getInt("UserID"));
+                user.setFullName(rs.getString("FullName"));
+                user.setBirthDate(rs.getDate("BirthDate"));
+                user.setAddress(rs.getString("Address"));
+                user.setPhone(rs.getString("Phone"));
+                user.setEmail(rs.getString("Email"));
+                user.setRole(rs.getString("Role"));
+            }
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return user;
+    }
+
+    public int loginUser(User user) throws SQLException{
+        int id = -1;
+        Connection conn = JDBCUtil.getConnection();
+        try
+        {
+            PreparedStatement statement = conn.prepareStatement(sqlLogin);
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                id = rs.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+            return -1;
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return id;
+    }
 }
