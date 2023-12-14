@@ -23,14 +23,14 @@
 <body>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
   <div class="container">
-    <a href="index.jsp" class="navbar-brand">Blogen</a>
+    <a href="<%= request.getContextPath() %>/index_admin.jsp" class="navbar-brand">Blogen</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav">
         <li class="nav-item px-2">
-          <a href="index.jsp" class="nav-link">Dashboard</a>
+          <a href="<%= request.getContextPath() %>/index_admin.jsp" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item px-2">
           <a href="posts.jsp" class="nav-link">Posts</a>

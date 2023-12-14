@@ -1,10 +1,10 @@
 package com.cloud.Util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
 
 public class JDBCUtil {
     public static Connection getConnection()
@@ -19,6 +19,7 @@ public class JDBCUtil {
 
 
             conn=DriverManager.getConnection(url,username,password);
+            System.out.println(conn);
         }
         catch (SQLException e)
         {
@@ -42,7 +43,10 @@ public class JDBCUtil {
             //TODO Auto-generated catch block
             e.printStackTrace();
         }
+
     }
+
+
     public static Date getSQLDate(LocalDate date) {
         return java.sql.Date.valueOf(date);
     }

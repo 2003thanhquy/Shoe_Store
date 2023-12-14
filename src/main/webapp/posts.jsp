@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Asus ROG
@@ -23,14 +24,14 @@
 <body>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
     <div class="container">
-        <a href="index.jsp" class="navbar-brand">Cloud Shop</a>
+        <a href="<%= request.getContextPath() %>/index_admin.jsp" class="navbar-brand">Cloud Shop</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav">
                 <li class="nav-item px-2">
-                    <a href="index.jsp" class="nav-link">Dashboard</a>
+                    <a href="<%= request.getContextPath() %>/index_admin.jsp" class="nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item px-2">
                     <a href="posts.jsp" class="nav-link active">Posts</a>
@@ -115,6 +116,8 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <!---product 1---->
+                        <c:forEach var="product" items="listProduct">
                         <tr>
                             <td>1</td>
                             <td>Post One</td>
@@ -126,6 +129,8 @@
                                 </a>
                             </td>
                         </tr>
+                        </c:forEach>
+                        <!---product 1---->
                         <tr>
                             <td>2</td>
                             <td>Post Two</td>

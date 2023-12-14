@@ -1,0 +1,77 @@
+package com.cloud.Controllers;
+
+import com.cloud.Daos.ProductDao;
+import com.cloud.Daos.UserDao;
+import com.cloud.Models.Product;
+import com.cloud.Models.User;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
+@WebServlet("/pro/*")
+public class ProductController extends HttpServlet {
+    private ProductDao productDao;
+
+    public void init() {
+        productDao = new ProductDao();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action  = request.getPathInfo();
+        switch (action)
+        {
+            case "/list_product" :
+                System.out.println("list");
+                listProduct(request, response);
+                break;
+            case "/insert_product":
+                addProduct(request, response);
+                break;
+            default:
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+                dispatcher.forward(request, response);
+                break;
+        }
+
+    }
+
+    private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        String Name = request.getParameter("Name");
+        String DateAdd = request.getParameter("DateAdd");
+        java.sql.Date dateAdd = java.sql.Date.valueOf(DateAdd);
+        String Description =  request.getParameter("Description");
+        String Price = request.getParameter("Price");
+        BigDecimal price = new BigDecimal(Price);
+        int Stock = Integer.parseInt(request.getParameter("Stock"));
+        byte[] Image = request.getParameter("Image").getBytes();
+        int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
+        Product product = new Product(Name,Description,price,Stock,Image,dateAdd,CategoryID);
+        productDao.addProduct(product);
+        response.sendRedirect("list_product");
+    }
+
+    private void listProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+        HttpSession session = request.getSession();
+        List<Product> listProduct = productDao.getAllProducts();
+        request.setAttribute("listProduct", listProduct);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index_admin.jsp");
+        dispatcher.forward(request, response);
+    }
+}

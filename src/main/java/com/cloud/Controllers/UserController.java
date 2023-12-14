@@ -20,6 +20,7 @@ import com.cloud.Daos.UserDao;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 @WebServlet("/")
+
 public class UserController extends HttpServlet{
     private static final long serialVersionUID = 1L;
     private  UserDao userDao;
@@ -33,7 +34,7 @@ public class UserController extends HttpServlet{
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action  = request.getServletPath();
+        String action  = request.getPathInfo();
         try {
             switch (action)
             {
@@ -119,6 +120,7 @@ public class UserController extends HttpServlet{
         }
     }
 
+
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int userID = Integer.parseInt(request.getParameter("UserID"));
@@ -126,6 +128,7 @@ public class UserController extends HttpServlet{
         RequestDispatcher dispatcher = request.getRequestDispatcher("/usersDetails.jsp");
         request.setAttribute("User", existuser);
         dispatcher.forward(request, response);
+
 
     }
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {

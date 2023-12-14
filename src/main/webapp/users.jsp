@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav">
                 <li class="nav-item px-2">
-                    <a href="index.jsp" class="nav-link">Dashboard</a>
+                    <a href="<%= request.getContextPath() %>/pro/list_product" class="nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item px-2">
                     <a href="posts.jsp" class="nav-link">Posts</a>
@@ -40,7 +40,7 @@
                     <a href="categories.jsp" class="nav-link">Categories</a>
                 </li>
                 <li class="nav-item px-2">
-                    <a href="users.jsp" class="nav-link active">Users</a>
+                    <a href="<%= request.getContextPath() %>/user/list_UserController" class="nav-link active">Users</a>
                 </li>
             </ul>
 
@@ -131,7 +131,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<%= request.getContextPath() %>/insert_UserController" method="post">
+                <form action="<%= request.getContextPath() %>/user/insert_UserController" method="post">
 
                     <div class="form-group">
                         <label for="FullName">Full Name</label>
