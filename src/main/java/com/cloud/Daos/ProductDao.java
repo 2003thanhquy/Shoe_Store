@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ProductDao {
     String sqlGetAll = "SELECT * FROM products";
+    String sqlGetRandom = "SELECT * FROM Products ORDER BY RAND() LIMIT ?";
     String sqlInsert = "INSERT INTO Products (Name, Description, Price, Stock, Image, DateAdd, CategoryID) VALUES (?,?,?,?,?,?,?)";
 
     public List<Product> getAllProducts () {
@@ -68,4 +69,32 @@ public class ProductDao {
             JDBCUtil.closeConnection(conn);
         }
     }
+    public List<Product> getAllProductsRandomly (int maxSize) {
+        List<Product> products = new ArrayList<>();
+        Connection conn = JDBCUtil.getConnection();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sqlGetRandom);
+            ps.setInt(1, maxSize);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getInt("ProductID"));
+                product.setName(rs.getString("Name"));
+                product.setDescription(rs.getString("Description"));
+                product.setPrice(rs.getBigDecimal("Price"));
+                product.setStock(rs.getInt("Stock"));
+                product.setImage(rs.getBytes("Image"));
+                product.setDateAdd(rs.getDate("DateAdd"));
+                product.setCategoryID(rs.getInt("CategoryID"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return products;
+    }
+
 }
