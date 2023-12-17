@@ -14,6 +14,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String role;
+    private byte[] avatar;
 
     public User()
     {
@@ -103,5 +104,12 @@ public class User implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 }

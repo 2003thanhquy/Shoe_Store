@@ -15,6 +15,7 @@ public class Product implements Serializable {
     private byte[] image;
     private Date dateAdd;
     private int categoryID;
+    private BigDecimal rate;
 
     public Product()
     {
@@ -94,5 +95,13 @@ public class Product implements Serializable {
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
+    }
+
+    public BigDecimal getRate() {
+        return rate;
+    }
+
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
     }
 }
