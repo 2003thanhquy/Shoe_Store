@@ -56,7 +56,7 @@
             <span class="h4">Account Login</span>
           </div>
           <div class="card-body">
-            <form action="<%= request.getContextPath() %>/login" method="post">
+            <form action="<%= request.getContextPath() %>/user/login" method="post">
               <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name ="email" class="form-control">
