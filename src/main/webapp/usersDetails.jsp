@@ -126,11 +126,13 @@
                             <input type="hidden" name="from" value="userDetails">
                             <div class="form-group">
                                 <label for="UserID">User ID</label>
+                                <%--
                                 <!--
                                 Có hai cách lấy giá trị cho value:
                                     value="<c:out value='${User.userID}' />"
                                     value="${User.fullName}"
                                  -->
+                                 --%>
                                 <input readonly type="text" value="<c:out value='${User.userID}' />" id = "UserID" name ="UserID"  class="form-control">
                             </div>
 
