@@ -22,6 +22,7 @@ public class HomeController extends HttpServlet {
     private String ADMIN_DASHBOARD = "index_admin.jsp";
     private String USER_ABOUT_PAGE = "home_about.jsp";
     private String ALL_PRODUCT_PAGE = "all_product.jsp";
+    private String NEW_ARRIVAL_PRODUCT_PAGE = "new_arrival.jsp";
     // DAO
     private ProductDao productDao;
     private SaleDao saleDao;
@@ -75,6 +76,9 @@ public class HomeController extends HttpServlet {
                     }).collect(Collectors.toList());
                     req.setAttribute("listProduct", productDtoList);
                     break;
+                case "new arrival":
+
+
                 default:
                     url = USER_HOME_PAGE;
                     break;
