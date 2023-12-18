@@ -14,12 +14,11 @@
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+      <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
+
     <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" />
+
   </head>
   <body>
     <!-- Navigation-->
@@ -56,7 +55,7 @@
                     >
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">All Products</a></li>
-                        <li>
+                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
                         <li>
@@ -433,8 +432,6 @@
     </div>
 </footer>
 <!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+
 </body>
 </html>

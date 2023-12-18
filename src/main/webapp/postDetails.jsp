@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
 
 <head>
@@ -117,33 +118,56 @@
             <h4>Edit Post</h4>
           </div>
           <div class="card-body">
-            <form>
+            <form action="<%= request.getContextPath() %>/pro/update_product" method = "post" >
+              <input type="hidden" name="from" value="productDetails">
               <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" value="Post One">
+                <label for="ProductID">Product ID</label>
+                <!--
+                                Có hai cách lấy giá trị cho value:
+                                    value="<c:out value='${product.productID}' />"
+                                    value="${product.name}"
+                                 -->
+                <input readonly type="text" value="<c:out value='${Product.productID}'/>" id = "ProductID" name ="ProductID"  class="form-control">
               </div>
               <div class="form-group">
-                <label for="category">Category</label>
-                <select name="" id="" class="form-control">
-                  <option value=""></option>
-                  <option value="" selected>Web Development</option>
-                  <option value="">Tech Gadgets</option>
-                  <option value="">Business</option>
-                  <option value="">Health & Wellness</option>
-                </select>
+                <label for="name">Name</label>
+                <input type="text" value="${Product.name}" id="Name" name = "Name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="Price">Price</label>
+                <input type="text" value="${Product.price}" id="Price" name = "Price" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="Stock">Stock</label>
+                <input type="text" value="${Product.stock}" id="Stock" name = "Stock" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="CategoryID">Category</label>
+                <input type="text" value="${Product.categoryID}" id="CategoryID" name = "CategoryID" class="form-control">
               </div>
               <div class="form-group">
                 <label for="image">Upload Image</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="image">
-                  <label for="image" class="custom-file-label">Choose File</label>
+                  <input type="file" class="custom-file-input" id="Image" name = "Image">
+                  <label for="Image" class="custom-file-label">Choose File</label>
                 </div>
                 <small class="form-text text-muted">Max Size 3mb</small>
               </div>
               <div class="form-group">
-                <label for="body">Body</label>
-                <textarea name="editor1"
-                          class="form-control">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos, fuga, molestias debitis, eveniet illum officia suscipit provident quasi recusandae quia necessitatibus. Magni expedita mollitia, laudantium consequuntur, id officia quisquam eius corporis aliquid dolorem laboriosam aspernatur dolorum dolore laborum numquam odio voluptatem itaque ea sapiente quas eveniet earum velit! Inventore, vitae!</textarea>
+                <label for="DateAdd">Date Add</label>
+                <input type="date" value="${Product.dateAdd}" id = "DateAdd"  name ="DateAdd" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="Description">Description</label>
+                <textarea id="Description" name="Description" class="form-control">${Product.description}</textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="Rate">Rate</label>
+                <input type="text" value="${Product.rate}" id="Rate" name = "Rate" class="form-control">
+              </div>
+              <div class="modal-footer">
+                <button type = "submit" class="btn btn-warning">Save Add</button>
               </div>
             </form>
           </div>

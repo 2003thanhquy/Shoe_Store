@@ -19,7 +19,7 @@ import com.cloud.Models.User;
 import com.cloud.Daos.UserDao;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
-@WebServlet("/")
+@WebServlet("/user/*")
 
 public class UserController extends HttpServlet{
     private static final long serialVersionUID = 1L;

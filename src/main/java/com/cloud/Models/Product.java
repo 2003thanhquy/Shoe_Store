@@ -22,7 +22,7 @@ public class Product implements Serializable {
         super();
     }
 
-    public Product(String name, String description, BigDecimal price, int stock, byte[] image, Date dateAdd, int categoryID) {
+    public Product(String name, String description, BigDecimal price, int stock, byte[] image, Date dateAdd, int categoryID, BigDecimal rate) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -30,6 +30,20 @@ public class Product implements Serializable {
         this.image = image;
         this.dateAdd = dateAdd;
         this.categoryID = categoryID;
+        this.rate = rate;
+
+    }
+
+    public Product(int productID, String name, String description, BigDecimal price, int stock, byte[] image, java.sql.Date dateAdd, int categoryID, BigDecimal rate) {
+        this.productID = productID;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.image = image;
+        this.dateAdd = dateAdd;
+        this.categoryID = categoryID;
+        this.rate = rate;
     }
 
     // Getters and Setters
@@ -96,7 +110,6 @@ public class Product implements Serializable {
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
     }
-
     public BigDecimal getRate() {
         return rate;
     }
