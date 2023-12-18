@@ -19,7 +19,7 @@ import com.cloud.Models.User;
 import com.cloud.Daos.UserDao;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
-@WebServlet("/")
+@WebServlet("/user/*")
 
 public class UserController extends HttpServlet{
     private static final long serialVersionUID = 1L;
@@ -55,6 +55,12 @@ public class UserController extends HttpServlet{
                     break;
                 case "/delete_UserController":
                     deleteUser(request, response);
+                    break;
+                case "/updatePasswordProfile_UserController":
+                    updatePasswordProfile(request, response);
+                    break;
+                case "checkOldPassword_UserController":
+                    checkOldPassword(request, response);
                     break;
                 default:
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
@@ -144,6 +150,9 @@ public class UserController extends HttpServlet{
         String Role = request.getParameter("Role");
         User updateuser = new User( userID ,FullName, birthDate,Address, Phone, Email,Password,Role);
         userDao.updateUser(updateuser);
+        User user = userDao.selectUserById(userID);
+        HttpSession session = request.getSession();
+        session.setAttribute("userLogin", user);
         String from = request.getParameter("from");
         if ("profile".equals(from)) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
@@ -155,5 +164,40 @@ public class UserController extends HttpServlet{
         } else if ("userDetails".equals(from)) {
             response.sendRedirect("list_UserController");
         }
+    }
+    private void updatePasswordProfile(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String newPassword = request.getParameter("newPassword");
+        int userID = Integer.parseInt(request.getParameter("userID"));
+        request.setCharacterEncoding("UTF-8");
+        User updateuser = new User();
+        updateuser.setUserID(userID);
+        updateuser.setPassword(newPassword);
+        String resultMsg ="";
+        if(userDao.updateUserPassword(updateuser))
+            resultMsg = "Update password succeed";
+        else
+            resultMsg = "Update password fail";
+        User user = userDao.selectUserById(userID);
+        HttpSession session = request.getSession();
+        session.setAttribute("userLogin", user);
+        request.setAttribute("resultMsg",resultMsg);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
+        try{
+            dispatcher.forward(request, response);
+        }catch (ServletException e) {
+            e.printStackTrace();
+        }
+    }
+    private void checkOldPassword(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String newPassword = request.getParameter("oldPassword");
+        int userID = Integer.parseInt(request.getParameter("userID"));
+        request.setCharacterEncoding("UTF-8");
+        User updateuser = new User();
+        updateuser.setUserID(userID);
+        updateuser.setPassword(newPassword);
+        boolean isPasswordValid = userDao.checkUserOldPassword(updateuser);
+        request.setAttribute("isPasswordValid", isPasswordValid);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"isPasswordValid\": " + isPasswordValid + "}");
     }
 }
