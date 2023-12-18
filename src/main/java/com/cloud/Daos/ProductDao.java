@@ -15,7 +15,6 @@ import java.util.List;
 public class ProductDao {
     String sqlGetAll = "SELECT * FROM Products";
     String sqlInsert = "INSERT INTO Products (Name, Description, Price, Stock, Image, DateAdd, CategoryID, Rate) VALUES (?,?,?,?,?,?,?,?)";
-
     String DELETE_Product_By_ProductID = "DELETE FROM Products WHERE ProductID = ?";
     String sqlUpdate = "UPDATE Products SET Name = N?, Description = N?, Price = ?, Stock = ?, Image = ?, DateAdd = ?, CategoryID = ?, Rate = ? WHERE ProductID = ?";
     String Select_Product_By_ProductID = "SELECT * FROM Products WHERE ProductID = ?";
