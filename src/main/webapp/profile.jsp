@@ -113,7 +113,7 @@
                         <h4>Edit Profile</h4>
                     </div>
                     <div class="card-body">
-                        <form action="<%= request.getContextPath() %>/update_UserController" method = "post">
+                        <form action="<%= request.getContextPath() %>/user/update_UserController" method = "post">
                             <input type="hidden" name="from" value="profile">
                             <div class="form-group">
                                 <label for="UserID">User ID</label>
@@ -185,23 +185,27 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form>
                     <div class="form-group">
                         <label for="oldPassword">Old Password</label>
                         <input type="password" id="oldPassword" name="oldPassword" class="form-control">
+                        <p id="oldPasswordError" class="text-danger"></p>
                     </div>
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
                         <input type="password" id="newPassword" name="newPassword" class="form-control">
+                        <p id="newPasswordError" class="text-danger"></p>
                     </div>
                     <div class="form-group">
                         <label for="confirmNew">Confirm New Password</label>
                         <input type="password" id="confirmNew" name="confirmNew" class="form-control">
+                        <p id="confirmNewError" class="text-danger"></p>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal">Save Changes</button>
+                <button id="btnChangePassword" type="submit" class="btn btn-success">Save Changes</button>
+                <button  class="btn" data-dismiss="modal">Exit</button>
             </div>
         </div>
     </div>
@@ -251,6 +255,96 @@
     //CKEditor
     CKEDITOR.replace('editor1');
 </script>
+<script>
+    $(document).ready(function(){
+        $("#btnChangePassword").click(function(event){
+            event.preventDefault();
+
+            var oldPassword = $("#oldPassword").val();
+            var newPassword = $("#newPassword").val();
+            var confirmNew = $("#confirmNew").val();
+            var userID = $("#userID").val();
+            if (oldPassword.trim() === "") {
+                $("#oldPasswordError").text("Please enter old password");
+                return;
+            } else {
+                $("#oldPasswordError").text("");
+            }
+
+            if (newPassword.trim() === "") {
+                $("#newPasswordError").text("Please enter new password");
+                return;
+            } else {
+                $("#newPasswordError").text("");
+            }
+
+            if (confirmNew.trim() === "") {
+                $("#confirmNewError").text("Please confirm new password");
+                return;
+            } else {
+                $("#confirmNewError").text("");
+            }
+
+            if (newPassword !== confirmNew) {
+                $("#confirmNewError").text("Passwords do not match");
+                return;
+            } else {
+                $("#confirmNewError").text("");
+            }
+            var requestData = {
+                oldPassword: oldPassword,
+                userID: userID
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "<%=request.getContextPath()%>/user/checkOldPassword_UserController",
+                data: requestData,
+                success: function(response){
+                    var isPasswordValid = response.isPasswordValid;
+                    if(isPasswordValid){
+                        localStorage.setItem('newPassword', newPassword);
+                        localStorage.setItem('userID', userID);
+                        window.location.href = "/user/updatePasswordProfile_UserController";
+                    } else {
+                        alert("Password change failed. Please check your old password.");
+                    }
+                },
+                error: function(xhr, status, error){
+                    console.error("Ajax request failed:", status, error);
+                }
+            });
+        });
+    });
+</script>
+<% if (request.getAttribute("resultMsg") != null) { %>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ${resultMsg}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to trigger the modal -->
+<script>
+    $(document).ready(function() {
+        console.log('Document ready function');
+        $('#myModal').modal('show');
+    });
+</script>
+<% } %>
 </body>
 
 </html>
