@@ -113,7 +113,7 @@ public class UserController extends HttpServlet{
             if(user.getRole().equals("Manager") || user.getRole().equals("manager"))
                 response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
             else
-                response.sendRedirect(request.getContextPath()+"/index.jsp");
+                response.sendRedirect(request.getContextPath()+"/home");
         }
         else {
             request.setAttribute("errMsg", "Thong tin dang nhap khong chinh xac");

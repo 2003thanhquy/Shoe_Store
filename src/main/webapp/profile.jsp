@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.cloud.Models.User" %><%--
   Created by IntelliJ IDEA.
   User: Asus ROG
   Date: 12/3/2023
@@ -18,57 +18,27 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <title>Admin Dashboard</title>
+    <%
+        User userLogin = (User) request.getSession().getAttribute("userLogin");
+        if(userLogin == null) response.sendRedirect("login.jsp");
+    %>
+    <title><%=userLogin.getRole().equals("Manager")? "Admin Dashboard" : "Shoe Shop"%></title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
-    <div class="container">
-        <a href="index.jsp" class="navbar-brand">Cloud Shop</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav d-none">
-                <li class="nav-item px-2">
-                    <a href="index.jsp" class="nav-link">Dashboard</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a href="posts.jsp" class="nav-link">Posts</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a href="categories.jsp" class="nav-link">Categories</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a href="users.jsp" class="nav-link">Users</a>
-                </li>
-            </ul>
+<%
+    if(userLogin.getRole().equals("Manager")){
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown mr-3">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <i class="fas fa-user"></i> Welcome Khanh
-                        <!--Placeholder Username-->
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="profile.jsp" class="dropdown-item">
-                            <i class="fas fa-user-circle"></i> Profile
-                        </a>
-                        <a href="settings.jsp" class="dropdown-item">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="login.jsp" class="nav-link">
-                        <i class="fas fa-user-times"></i> Logout
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
+%>
+    <jsp:include page="admin_navbar.jsp"/>
+<%
+    }else{
+%>
+    <jsp:include page="homepage_navbar.jsp"/>
+<%
+    };
+%>
 <!--Header-->
 <header id="main-header" class="py-2 bg-primary text-white">
     <div class="container">
