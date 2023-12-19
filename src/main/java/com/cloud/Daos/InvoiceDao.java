@@ -1,8 +1,11 @@
 package com.cloud.Daos;
 
 import com.cloud.Models.Invoice;
-import com.cloud.Util.JDBCUtil;
+import com.cloud.Models.Product;
 import com.cloud.Util.HandleExeption;
+import com.cloud.Util.JDBCUtil;
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +20,7 @@ public class InvoiceDao {
         Connection conn = JDBCUtil.getConnection();
 
         try {
+
             PreparedStatement ps = conn.prepareStatement(sql);
             System.out.println(ps);
             ResultSet rs = ps.executeQuery();
@@ -28,7 +32,6 @@ public class InvoiceDao {
                 invoice.setTotal(rs.getDouble("Total"));
                 invoice.setStatus(rs.getInt("Status"));
                 invoice.setTypePayment(rs.getInt("TypePayment"));
-
                 invoices.add(invoice);
             }
         } catch (SQLException e) {
