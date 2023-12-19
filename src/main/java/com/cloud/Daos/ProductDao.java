@@ -1,6 +1,5 @@
 package com.cloud.Daos;
 
-import com.cloud.Dto.ProductDto;
 import com.cloud.Models.Product;
 import com.cloud.Util.HandleExeption;
 import com.cloud.Util.JDBCUtil;
@@ -11,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ProductDao {
@@ -41,7 +39,7 @@ public class ProductDao {
                 product.setImage(rs.getBytes("Image"));
                 product.setDateAdd(rs.getDate("DateAdd"));
                 product.setCategoryID(rs.getInt("CategoryID"));
-                product.setPrice(rs.getBigDecimal("Rate"));
+                product.setRate(rs.getBigDecimal("Rate"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -221,7 +219,7 @@ public class ProductDao {
                 product.setImage(rs.getBytes("Image"));
                 product.setDateAdd(rs.getDate("DateAdd"));
                 product.setCategoryID(rs.getInt("CategoryID"));
-                product.setPrice(rs.getBigDecimal("Rate"));
+                product.setRate(rs.getBigDecimal("Rate"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -251,7 +249,7 @@ public class ProductDao {
                 product.setImage(rs.getBytes("Image"));
                 product.setDateAdd(rs.getDate("DateAdd"));
                 product.setCategoryID(rs.getInt("CategoryID"));
-                product.setPrice(rs.getBigDecimal("Rate"));
+                product.setRate(rs.getBigDecimal("Rate"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -280,7 +278,7 @@ public class ProductDao {
                 product.setImage(rs.getBytes("Image"));
                 product.setDateAdd(rs.getDate("DateAdd"));
                 product.setCategoryID(rs.getInt("CategoryID"));
-                product.setPrice(rs.getBigDecimal("Rate"));
+                product.setRate(rs.getBigDecimal("Rate"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -309,7 +307,7 @@ public class ProductDao {
                 product.setImage(rs.getBytes("Image"));
                 product.setDateAdd(rs.getDate("DateAdd"));
                 product.setCategoryID(rs.getInt("CategoryID"));
-                product.setPrice(rs.getBigDecimal("Rate"));
+                product.setRate(rs.getBigDecimal("Rate"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -319,4 +317,4 @@ public class ProductDao {
         }
         return products;
     }
- }
+}

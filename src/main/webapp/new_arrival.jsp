@@ -58,10 +58,10 @@
                                 <!-- Product price-->
                                 <c:if test="${product.discount != 0}">
                                     <span class="text-muted text-decoration-line-through"
-                                    >$${(100 - product.discount) * product.price / 100}</span
+                                    >  $${product.price}</span
                                     >
                                 </c:if>
-                                $${product.price}
+                                $${(100 - product.discount) * product.price / 100}
                             </div>
                         </div>
                         <!-- Product actions-->
