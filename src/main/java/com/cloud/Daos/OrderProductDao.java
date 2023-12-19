@@ -15,12 +15,12 @@ import java.util.List;
 public class OrderProductDao {
     private String sqlGet = "Select * from OrderProduct\n" +
             "Where OrderID = ?";
-    public List<OrderProduct> getOrderProduct(String oderid){
+    public List<OrderProduct> getOrderProduct(int oderid){
         List<OrderProduct> orderProducts = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
         try {
             PreparedStatement ps = conn.prepareStatement(sqlGet);
-
+            ps.setInt(1,oderid);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 OrderProduct orderProduct = new OrderProduct();
