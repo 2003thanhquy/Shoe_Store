@@ -10,9 +10,7 @@ public class Invoice implements Serializable {
     private int invoiceID;
     private int orderID;
 
-    public int getTypePayment() {
-        return typePayment;
-    }
+
 
     private Date invoiceDateTime;
     private Double total;
@@ -22,6 +20,9 @@ public class Invoice implements Serializable {
         return (typePayment == 1) ? "Credit" : "COD";
     }
 
+    public int getTypePayment() {
+        return typePayment;
+    }
     public void setTypePayment(int typePayment) {
         this.typePayment = typePayment;
     }
@@ -37,6 +38,8 @@ public class Invoice implements Serializable {
     }
 
     private int status;
+    public Invoice() {
+    }
 
     // Getters and Setters
     public int getInvoiceID() {
@@ -70,4 +73,5 @@ public class Invoice implements Serializable {
     public void setTotal(Double total) {
         this.total = total;
     }
+
 }

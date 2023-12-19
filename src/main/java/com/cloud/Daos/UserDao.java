@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    String sqlInsert = "INSERT INTO users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    String sqlGetAll = "SELECT * FROM users";
-    String sqlUpdate = "UPDATE users SET FullName = N?, BirthDate = ?, Address = N?, Phone = ?, Email = ?, Role = ? WHERE UserID = ?";
-    String DELETE_User_By_UserID = "DELETE FROM users WHERE UserID = ?";
+    String sqlInsert = "INSERT INTO Users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String sqlGetAll = "SELECT * FROM Users";
+    String sqlUpdate = "UPDATE Users SET FullName = N?, BirthDate = ?, Address = N?, Phone = ?, Email = ?, Role = ? WHERE UserID = ?";
+    String DELETE_User_By_UserID = "DELETE FROM Users WHERE UserID = ?";
     String Select_User_By_UserID = "SELECT * FROM Users WHERE UserID = ?";
-    String sqlLogin = "SELECT UserID FROM users WHERE Email = ? and password = ?";
+    String sqlLogin = "SELECT UserID FROM Users WHERE Email = ? and password = ?";
     public List<User> getAllUsers () {
         List<User> users = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
@@ -163,5 +163,27 @@ public class UserDao {
             JDBCUtil.closeConnection(conn);
         }
         return id;
+    }
+    public boolean checkUserOldPassword(User user) throws SQLException{
+        int id = -1;
+        String sqlCheckOldPass = "SELECT * FROM Users WHERE UserID = ? AND Password = ?";
+        Connection conn = JDBCUtil.getConnection();
+        try
+        {
+            PreparedStatement statement = conn.prepareStatement(sqlCheckOldPass);
+            statement.setInt(1, user.getUserID());
+            statement.setString(2, user.getPassword());
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                id = rs.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+            return id == -1;
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return id == -1;
     }
 }

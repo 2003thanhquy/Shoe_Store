@@ -26,7 +26,7 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
     <div class="container">
         <a href="<%= request.getContextPath() %>/pro/list_product" class="navbar-brand">Fasion Shop</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <button class="navbar-toggler" data-toggle="collapse" data-target=  "#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -118,13 +118,18 @@
                         <!---Post 1--->
                         <c:forEach var="product" items="${listProduct}">
                         <tr>
-                            <td>${product.productID}</td>
+                            <td name="ProductID" value ="${product.productID}">${product.productID}</td>
                             <td>${product.name}</td>
                             <td>${product.categoryID}</td>
                             <td>${product.dateAdd}</td>
                             <td>
-                                <a href="postDetails.jsp" class="btn btn-secondary">
+                                <a href="edit_product?ProductID=<c:out value='${product.productID}' />" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
+                                </a>
+                            </td>
+                            <td>
+                                <a href="delete_product?ProductID=<c:out value='${product.productID}' />" class="btn btn-secondary" style="background-color:indianred">
+                                    <i class="fas fa-angle-double-right"></i> Delete
                                 </a>
                             </td>
                         </tr>
@@ -232,9 +237,14 @@
                         <label for="Description">Description</label>
                         <textarea id="Description" name = "Description" class="form-control"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="Rate">Rate</label>
+                        <input type="text" id="Rate" name = "Rate" class="form-control">
+                    </div>
                     <div class="modal-footer">
                         <button type = "submit" class="btn btn-warning">Save Add</button>
                     </div>
+
                 </form>
             </div>
 
