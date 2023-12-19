@@ -102,9 +102,7 @@ public class CartController extends HttpServlet {
         int status = cartDao.deleteByCartId(cartid);
 
         if (status > 0) {
-            //do something
-        } else {
-            //do something
+            resp.sendRedirect(req.getContextPath() + "/cart?action=list");
         }
     }
 }
