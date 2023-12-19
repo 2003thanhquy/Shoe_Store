@@ -14,6 +14,9 @@ import java.util.List;
 
 public class InvoiceDao {
     private final String sqlGet = "SELECT * FROM ShoeStore.Invoices";
+    private String sqlUpdate = "Update ShoeStore.Invoices\n" +
+            "set status = ?\n" +
+            "where InvoiceID =?";
 
     public List<Invoice> getInvoice(){
         List<Invoice> invoices = new ArrayList<>();
@@ -41,5 +44,20 @@ public class InvoiceDao {
 
         return invoices;
     }
+    public boolean updateInvoice(int idinvoice, int status){
+        Connection conn = JDBCUtil.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sqlUpdate);
+            ps.setInt(1,status);
+            ps.setInt(2,idinvoice);
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
 
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return false;
+    }
 }
