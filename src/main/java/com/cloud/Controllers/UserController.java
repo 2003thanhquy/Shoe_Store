@@ -62,6 +62,9 @@ public class UserController extends HttpServlet{
                 case "checkOldPassword_UserController":
                     checkOldPassword(request, response);
                     break;
+                case "logout_UserController":
+                    logout(request, response);
+                    break;
                 default:
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
                     dispatcher.forward(request, response);
@@ -116,7 +119,7 @@ public class UserController extends HttpServlet{
                 response.sendRedirect(request.getContextPath()+"/index.jsp");
         }
         else {
-            request.setAttribute("errMsg", "Thong tin dang nhap khong chinh xac");
+            request.setAttribute("errMsg", "Email or Password is incorrect");
             RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
             try{
                 dispatcher.forward(request, response);
@@ -199,5 +202,12 @@ public class UserController extends HttpServlet{
         request.setAttribute("isPasswordValid", isPasswordValid);
         response.setContentType("application/json");
         response.getWriter().write("{\"isPasswordValid\": " + isPasswordValid + "}");
+    }
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
 }
