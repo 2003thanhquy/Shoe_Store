@@ -17,10 +17,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     <title>Invoice</title>
@@ -41,6 +40,11 @@
 
         .pagination {
             margin-top: auto;
+        }
+        #modalDetail {
+            width: 80%;
+            height: 50%;
+            margin: 10% 0 0 15%; /* Đặt giá trị margin theo yêu cầu của bạn */
         }
     </style>
 </head>
@@ -135,12 +139,11 @@
                                     <td>${item.orderID}</td>
                                     <td>${item.total}</td>
                                     <td>${item.getTypePaymentString()}</td>
-                                    <td>${item.getStatusString()}</td>
+                                    <td class="status-column">${item.getStatusString()}</td>
                                     <td>${item.invoiceDateTime}</td>
                                     <td>
-                                        <a href="" class="btn btn-success">
-                                            Details
-                                        </a>
+                                        <button type="button" class="btn btn-primary" id="detail" data-toggle="modal" data-target=".bd-example-modal-lg" data-whever ="${item.orderID}">Details</button>
+
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-1="${item.getStatus()}" data-2="${item.invoiceID}">Update</button>
                                     </td>
                                 </tr>
@@ -227,6 +230,14 @@
         </div>
     </div>
 </div>
+<%--modal details--%>
+<div class="modal fade bd-example-modal-lg" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <h1>Hello world</h1>
+        </div>
+    </div>
+</div>
 <<!--Footer-->
 <footer id="main-footer" class="bg-dark text-white mt-5 p-5">
     <div class="container">
@@ -267,25 +278,30 @@
 </body>
 
 <script>
-    $('#exampleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var idinvoice = button.data('1') // Extract info from data-* attributes
-        var status = button.data('2')
+    jQuery('#exampleModal').on('show.bs.modal', function (event) {
+        var button = jQuery(event.relatedTarget) // Button that triggered the modal
+        var idinvoice = button.data('2') // Extract info from data-* attributes
+        var status = button.data('1')
         var modal = $(this)
         modal.find('.modal-title').text("Update Invoice")
         modal.find('#idinvoice').val(idinvoice)
         modal.find('#idstatus option').each(function () {
-            if ($(this).val() === status) {
+            if ($(this).val() == status) {
                 $(this).prop('selected', true);
             } else {
                 $(this).prop('selected', false);
             }
         });
     })
+    jQuery('#modalDetail').on('show.bs.modal',function (event){
+        var modal = $(this);
+        // modal.css('top', '10px');  // Đặt vị trí theo yêu cầu của bạn
+        // modal.css('left', '50px'); // Đặt vị trí theo yêu cầu của bạn
+    })
+
 </script>
 <script>
     function fConfirm() {
-        var dataObj = getData();
         let url = window.location.href;
         jQuery.ajax({
             url: url,
@@ -295,42 +311,36 @@
                 status: jQuery('#idstatus').val()
             },
             success: function () {
-                alert("thanh cong")
+                alert("success")
+                var finstatus = $('button[data-2="' + jQuery('#idinvoice').val() + '"]').closest('tr').find('.status-column');
+                finstatus.text(jQuery('#idstatus').val() == '1' ? 'Done' : 'Pending');
+                $('#exampleModal').modal('hide');
+
             },
             error: function () {
-                alert("Loi")
+                alert("ERROR !!!")
             }
         })
     }
-        <%--jQuery.ajax({--%>
-        <%--    url: "${pageContext.request.getContextPath()}/nhanvien/hopdong/danhsach",--%>
-        <%--    method: "GET",--%>
-        <%--    dateType: "json",--%>
-        <%--    success: function (data) {--%>
-        <%--        var tblHopDong = jQuery("#tbl-hopdong");--%>
-        <%--        tblHopDong.empty();--%>
-        <%--        tblHopDong.append("<tbody>");--%>
-        <%--        jQuery(data).each(function (index, element) {--%>
-        <%--            tblHopDong.append(`<tr class="row100 body"><td class="cell100 column1">\${element.maHopDong}</td><td class="cell100 column2">\${element.ngayBD}</td><td class="cell100 column3">\${element.ngayKT}</td><td class="cell100 column4">\${element.maNV}</td><td class="cell100 column5">\${element.noiDung}</td></tr>`);--%>
-        <%--        });--%>
-        <%--        tblHopDong.append("</tbody>");--%>
-        <%--    },--%>
-        <%--    error: function (data) {--%>
-        <%--        console.error("Can't get contracts list");--%>
-        <%--    },--%>
-        <%--})--%>
-        <%--    .done(function () {--%>
-        <%--        //fill clicked data to form--%>
-        <%--        jQuery(".row100").on("click", function () {--%>
-        <%--            var clickedRow = jQuery(this);--%>
+    $('#detail').on('click', function () {
+        let url = window.location.href;
+        jQuery.ajax({
+            url: url,
+            method: "GET",
+            data: {
+                orderid : $(this).data('whever')
+            },
+            success: function () {
+                alert("success")
+                var finstatus = $('button[data-2="' + jQuery('#idinvoice').val() + '"]').closest('tr').find('.status-column');
+                finstatus.text(jQuery('#idstatus').val() == '1' ? 'Done' : 'Pending');
+                $('#exampleModal').modal('hide');
 
-        <%--            jQuery("#hd-tthd-idhopdong").val(clickedRow.find(".column1").text());--%>
-        <%--            jQuery("#hd-tthd-ngaybatdau").val(clickedRow.find(".column2").text());--%>
-        <%--            jQuery("#hd-tthd-ngayketthuc").val(clickedRow.find(".column3").text());--%>
-        <%--            jQuery("#hd-tthd-idnhanvien").val(clickedRow.find(".column4").text());--%>
-        <%--            jQuery("#hd-tthd-noidung").val(clickedRow.find(".column5").text());--%>
-        <%--        });--%>
-        <%--    });--%>
+            },
+            error: function () {
+                alert("ERROR !!!")
+            }
+    });
 </script>
 
 </html>

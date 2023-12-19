@@ -13,15 +13,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 public class InvoiceDao {
+    private final String sqlGet = "SELECT * FROM ShoeStore.Invoices";
+    private String sqlUpdate = "Update ShoeStore.Invoices\n" +
+            "set status = ?\n" +
+            "where InvoiceID =?";
 
-    public List<Invoice> getAllInvoices () {
-        String sql = "SELECT * FROM Invoices";
+
+    public List<Invoice> getInvoice () {
         List<Invoice> invoices = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
 
         try {
 
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sqlGet);
             System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -40,5 +44,21 @@ public class InvoiceDao {
             JDBCUtil.closeConnection(conn);
         }
         return invoices;
+    }
+    public boolean updateInvoice(int idinvoice, int status){
+        Connection conn = JDBCUtil.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sqlUpdate);
+            ps.setInt(1,status);
+            ps.setInt(2,idinvoice);
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            HandleExeption.printSQLException(e);
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
+        return false;
     }
 }

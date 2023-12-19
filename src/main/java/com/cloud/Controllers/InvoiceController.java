@@ -27,6 +27,14 @@ public class InvoiceController extends HttpServlet {
     void updateInvoice(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
             int idinvoice =Integer.parseInt( request.getParameter("idinvoice"));
             int status = Integer.parseInt(request.getParameter("status"));
+            if(invoiceDao.updateInvoice(idinvoice,status)){
+//                response.setContentType("application/json");
+//                response.getWriter().println("{\"idinvoice\":\"" + idinvoice + "\"}");
+                response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            }else{
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+
     }
     void getInvoice(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         List<Invoice> lstData = invoiceDao.getInvoice();
