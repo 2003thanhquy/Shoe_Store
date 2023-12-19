@@ -37,6 +37,8 @@ public class Invoice implements Serializable {
     }
 
     private int status;
+    public Invoice() {
+    }
 
     // Getters and Setters
     public int getInvoiceID() {
@@ -69,5 +71,21 @@ public class Invoice implements Serializable {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getTypePayment() {
+        return typePayment;
+    }
+
+    public void setTypePayment(int typePayment) {
+        this.typePayment = typePayment;
     }
 }

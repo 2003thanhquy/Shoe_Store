@@ -41,11 +41,58 @@ public class ProductController extends HttpServlet {
             case "/insert_product":
                 addProduct(request, response);
                 break;
+            case "/edit_product":
+                showEditProduct(request, response);
+                break;
+            case "/update_product":
+                updateProduct(request, response);
+                break;
+            case "/delete_product":
+                try {
+                    deleteProduct(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
             default:
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
                 break;
         }
+
+    }
+
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        int productID = Integer.parseInt(request.getParameter("ProductID"));
+        productDao.deleteProduct(productID);
+        response.sendRedirect("list_product");
+    }
+
+    private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        int productID = Integer.parseInt(request.getParameter("ProductID"));
+        String Name = request.getParameter("Name");
+        String DateAdd = request.getParameter("DateAdd");
+        java.sql.Date dateAdd = java.sql.Date.valueOf(DateAdd);
+        String Description =  request.getParameter("Description");
+        String Price = request.getParameter("Price");
+        BigDecimal price = new BigDecimal(Price);
+        int Stock = Integer.parseInt(request.getParameter("Stock"));
+        byte[] Image = request.getParameter("Image").getBytes();
+        int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
+        String Rate = request.getParameter("Rate");
+        BigDecimal rate = new BigDecimal(Rate);
+        Product product = new Product(productID,Name,Description,price,Stock,Image,dateAdd,CategoryID,rate);
+        productDao.updateProduct(product);
+        response.sendRedirect("list_product");
+    }
+
+    private void showEditProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int proID = Integer.parseInt(request.getParameter("ProductID"));
+        Product curpro = productDao.selectProById(proID);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/postDetails.jsp");
+        request.setAttribute("Product", curpro);
+        dispatcher.forward(request, response);
 
     }
 
@@ -60,7 +107,9 @@ public class ProductController extends HttpServlet {
         int Stock = Integer.parseInt(request.getParameter("Stock"));
         byte[] Image = request.getParameter("Image").getBytes();
         int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
-        Product product = new Product(Name,Description,price,Stock,Image,dateAdd,CategoryID);
+        String Rate = request.getParameter("Rate");
+        BigDecimal rate = new BigDecimal(Rate);
+        Product product = new Product(Name,Description,price,Stock,Image,dateAdd,CategoryID,rate);
         productDao.addProduct(product);
         response.sendRedirect("list_product");
     }

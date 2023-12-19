@@ -5,23 +5,24 @@ import com.cloud.Models.Product;
 import com.cloud.Util.HandleExeption;
 import com.cloud.Util.JDBCUtil;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 public class InvoiceDao {
-    private final String sqlGet = "SELECT * FROM ShoeStore.Invoices";
 
-    public List<Invoice> getInvoice(){
+    public List<Invoice> getAllInvoices () {
+        String sql = "SELECT * FROM Invoices";
         List<Invoice> invoices = new ArrayList<>();
         Connection conn = JDBCUtil.getConnection();
 
         try {
-            PreparedStatement ps = conn.prepareStatement(sqlGet);
 
+            PreparedStatement ps = conn.prepareStatement(sql);
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Invoice invoice = new Invoice();
@@ -29,8 +30,8 @@ public class InvoiceDao {
                 invoice.setOrderID(rs.getInt("OrderID"));
                 invoice.setInvoiceDateTime(rs.getDate("InvoiceDateTime"));
                 invoice.setTotal(rs.getDouble("Total"));
+                invoice.setStatus(rs.getInt("Status"));
                 invoice.setTypePayment(rs.getInt("TypePayment"));
-                invoice.setStatus(rs.getInt("status"));
                 invoices.add(invoice);
             }
         } catch (SQLException e) {
@@ -38,8 +39,6 @@ public class InvoiceDao {
         } finally {
             JDBCUtil.closeConnection(conn);
         }
-
         return invoices;
     }
-
 }
