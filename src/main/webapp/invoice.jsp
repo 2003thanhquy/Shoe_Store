@@ -44,7 +44,7 @@
         #modalDetail {
             width: 80%;
             height: 50%;
-            margin: 10% 0 0 15%; /* Đặt giá trị margin theo yêu cầu của bạn */
+            margin: 10% 0 0 10%; /* Đặt giá trị margin theo yêu cầu của bạn */
         }
     </style>
 </head>
@@ -117,7 +117,7 @@
                 <div class="card-container" id="card-container">
                     <div class="card">
                         <div class="card-header">
-                            <h4>List of orders</h4>
+                            <h4>Invoice</h4>
                         </div>
                         <table class="table table-striped">
                             <thead class="thead-dark">
@@ -142,9 +142,9 @@
                                     <td class="status-column">${item.getStatusString()}</td>
                                     <td>${item.invoiceDateTime}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" id="detail" data-toggle="modal" data-target=".bd-example-modal-lg" data-whever ="${item.orderID}">Details</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" data-whever ="${item.orderID}" >Details</button>
 
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-1="${item.getStatus()}" data-2="${item.invoiceID}">Update</button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-1="${item.getStatus()}" data-2="${item.invoiceID}">Update</button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -234,7 +234,29 @@
 <div class="modal fade bd-example-modal-lg" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <h1>Hello world</h1>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-detal">
+                <table class="table table-striped" id="p-detail">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>ProductID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>
@@ -294,9 +316,34 @@
         });
     })
     jQuery('#modalDetail').on('show.bs.modal',function (event){
-        var modal = $(this);
-        // modal.css('top', '10px');  // Đặt vị trí theo yêu cầu của bạn
-        // modal.css('left', '50px'); // Đặt vị trí theo yêu cầu của bạn
+
+        var button = jQuery(event.relatedTarget);
+
+        let url = window.location.href;
+        console.log(url,$(button).data('whever'))
+        jQuery.ajax({
+            url: url,
+            method: "GET",
+            data: {
+                orderid: $(button).data('whever')
+            },
+            success: function (data) {
+                console.log(data)
+                var pdetail = jQuery("#p-detail").find('tbody');
+                pdetail.empty();
+                jQuery(data).each(function (index, element) {
+                    pdetail.append(`<tr class="row100 body"><td class="cell100 column1">\${element.productID}</td><td class="cell100 column2">\${element.name}</td><td class="cell100 column3">\${element.price}</td><td class="cell100 column4">\${element.quantity}</td></tr>`);
+                });
+                var modal = $(this);
+                modal.find('.modal-body').html();
+            },
+            error: function (xhr, status, error) {
+                console.error('Ajax request failed:', status, error);
+            },
+            done: function (){
+            }
+        })
+
     })
 
 </script>
@@ -322,25 +369,8 @@
             }
         })
     }
-    $('#detail').on('click', function () {
-        let url = window.location.href;
-        jQuery.ajax({
-            url: url,
-            method: "GET",
-            data: {
-                orderid : $(this).data('whever')
-            },
-            success: function () {
-                alert("success")
-                var finstatus = $('button[data-2="' + jQuery('#idinvoice').val() + '"]').closest('tr').find('.status-column');
-                finstatus.text(jQuery('#idstatus').val() == '1' ? 'Done' : 'Pending');
-                $('#exampleModal').modal('hide');
 
-            },
-            error: function () {
-                alert("ERROR !!!")
-            }
-    });
+
 </script>
 
 </html>
