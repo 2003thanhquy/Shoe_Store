@@ -142,7 +142,7 @@
                                     <td class="status-column">${item.getStatusString()}</td>
                                     <td>${item.invoiceDateTime}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" data-whever ="${item.orderID}" >Details</button>
+                                        <button type="button" class="detail-btn btn btn-primary" data-toggle="modal" data-target="" data-whever ="${item.orderID}" >Details</button>
 
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-1="${item.getStatus()}" data-2="${item.invoiceID}">Update</button>
                                     </td>
@@ -315,12 +315,9 @@
             }
         });
     })
-    jQuery('#modalDetail').on('show.bs.modal',function (event){
-
-        var button = jQuery(event.relatedTarget);
-
+    jQuery('.detail-btn').on('click',function (event){
+        var button = $(this);
         let url = window.location.href;
-        console.log(url,$(button).data('whever'))
         var pdetail = jQuery("#p-detail").find('tbody');
         pdetail.empty();
         jQuery.ajax({
@@ -336,6 +333,7 @@
                 });
                 var modal = $(this);
                 modal.find('.modal-body').html();
+                $("#modalDetail").modal("show");
             },
             error: function (xhr, status, error) {
                 console.error('Ajax request failed:', status, error);
