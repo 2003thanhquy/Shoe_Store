@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.Base64"%>
 <html lang="en">
 
 <head>
@@ -98,6 +99,15 @@
                                     <option value="Manager" ${userLogin.role == 'Manager' ? 'selected' : ''}>Manager</option>
                                     <input type="hidden" name="Role" value="${userLogin.role}">
                                 </select>
+                            </div>
+                            <!-- Hình ảnh -->
+                            <input type="hidden" name="encodedImage" id="encodedImage" value="${Base64.getEncoder().encodeToString(userLogin.getAvatar())}">
+                            <div class="col-md-12 d-flex flex-column justify-content-center">
+                                <div class="mb-3 text-center" style="height: 200px;">
+                                    <img id="image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(userLogin.getAvatar())}"
+                                         alt="Hình ảnh" class="img-fluid mx-auto d-block mw-100 mh-100">
+                                </div>
+                                <div class="text-center"><input type="file" id="selectImage" accept="image/*"></div>
                             </div>
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-success btn-block">
@@ -238,6 +248,22 @@
                 }
             });
         });
+        document.getElementById('selectImage').addEventListener('change', function(event) {
+            var files = event.target.files;
+            if (files && files.length > 0) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var dataURL = reader.result;
+                    if (dataURL != null) {
+                        document.getElementById('image').src = dataURL;
+                        document.getElementById('encodedImage').value = dataURL;
+                    }
+                };
+                reader.readAsDataURL(files[0]);
+            } else {
+                console.error("No files selected or FileReader not supported.");
+            }
+        });
     });
 </script>
 <% if (request.getAttribute("resultMsg") != null) { %>
@@ -266,6 +292,7 @@
         console.log('Document ready function');
         $('#myModal').modal('show');
     });
+
 </script>
 <% } %>
 </body>
