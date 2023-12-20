@@ -1,7 +1,7 @@
 package com.cloud.Daos;
 
 import com.cloud.Models.User;
-import com.cloud.Util.JDBCUtil;
+import com.cloud.Util.JDBCUtil  ;
 import com.cloud.Util.HandleExeption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    String sqlInsert = "INSERT INTO Users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String sqlInsert = "INSERT INTO Users (FullName, BirthDate, Address, Phone, Email, Password, Role, Avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     String sqlGetAll = "SELECT * FROM Users";
-    String sqlUpdate = "UPDATE Users SET FullName = N?, BirthDate = ?, Address = N?, Phone = ?, Email = ?, Role = ? WHERE UserID = ?";
+    String sqlUpdate = "UPDATE Users SET FullName = N?, BirthDate = ?, Address = N?, Phone = ?, Email = ?, Role = ?, Avatar = ? WHERE UserID = ?";
     String DELETE_User_By_UserID = "DELETE FROM Users WHERE UserID = ?";
     String Select_User_By_UserID = "SELECT * FROM Users WHERE UserID = ?";
     String sqlLogin = "SELECT UserID FROM Users WHERE Email = ? and password = ?";
@@ -53,6 +53,7 @@ public class UserDao {
             ps.setString(5, user.getEmail());
             ps.setString(6, user.getPassword());
             ps.setString(7, user.getRole());
+            ps.setBytes(8, user.getAvatar());
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
@@ -76,7 +77,8 @@ public class UserDao {
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getEmail());
             ps.setString(6, user.getRole());
-            ps.setInt(7, user.getUserID());
+            ps.setBytes(7, user.getAvatar());
+            ps.setInt(8, user.getUserID());
             System.out.println(ps);
             int rowsUpdated = ps.executeUpdate();
             if(user.getPassword() != null && !user.getPassword().equals(""))
@@ -91,7 +93,7 @@ public class UserDao {
     }
     public boolean updateUserPassword(User user) throws SQLException {
         Connection conn = JDBCUtil.getConnection();
-        String sqlUpdatePass = "UPDATE users SET Password = ? WHERE UserID = ?";
+        String sqlUpdatePass = "UPDATE Users SET Password = ? WHERE UserID = ?";
         try {
 
             PreparedStatement ps = conn.prepareStatement(sqlUpdatePass);
@@ -134,6 +136,7 @@ public class UserDao {
                 user.setPhone(rs.getString("Phone"));
                 user.setEmail(rs.getString("Email"));
                 user.setRole(rs.getString("Role"));
+                user.setAvatar(rs.getBytes("Avatar"));
             }
         } catch (SQLException e) {
             HandleExeption.printSQLException(e);

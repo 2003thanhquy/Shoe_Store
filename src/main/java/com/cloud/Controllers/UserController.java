@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.io.IOException;
@@ -59,8 +60,11 @@ public class UserController extends HttpServlet{
                 case "/updatePasswordProfile_UserController":
                     updatePasswordProfile(request, response);
                     break;
-                case "checkOldPassword_UserController":
+                case "/checkOldPassword_UserController":
                     checkOldPassword(request, response);
+                    break;
+                case "logout_UserController":
+                    logout(request, response);
                     break;
                 default:
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
@@ -89,9 +93,25 @@ public class UserController extends HttpServlet{
         String Email = request.getParameter("Email");
         String Password = request.getParameter("Password");
         String Role = request.getParameter("Role");
+        String encodedImage = request.getParameter("encodedImage");
+        String base64Image = encodedImage.replaceAll("data:image/\\w+;base64,", "");
+        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
         User user = new User(FullName,birthDate,Address, Phone, Email,Password,Role);
+        user.setAvatar(imageBytes);
         userDao.insertUser(user);
-        response.sendRedirect("list_UserController");
+        String from = request.getParameter("from");
+        if ("signup".equals(from)) {
+            request.setAttribute("email",Email);
+            request.setAttribute("password",Password);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+            try{
+                dispatcher.forward(request, response);
+            }catch (ServletException e) {
+                e.printStackTrace();
+            }
+        } else if ("users".equals(from)) {
+            response.sendRedirect("list_UserController");
+        }
     }
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int UserID = Integer.parseInt(request.getParameter("UserID"));
@@ -111,12 +131,13 @@ public class UserController extends HttpServlet{
             HttpSession session = request.getSession();
             session.setAttribute("userLogin", user);
             if(user.getRole().equals("Manager") || user.getRole().equals("manager"))
-                response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
+                //response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
+                response.sendRedirect(request.getContextPath() + "/pro/list_product");
             else
                 response.sendRedirect(request.getContextPath()+"/home");
         }
         else {
-            request.setAttribute("errMsg", "Thong tin dang nhap khong chinh xac");
+            request.setAttribute("errMsg", "Email or Password is incorrect");
             RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
             try{
                 dispatcher.forward(request, response);
@@ -133,9 +154,12 @@ public class UserController extends HttpServlet{
         User existuser = userDao.selectUserById(userID );
         RequestDispatcher dispatcher = request.getRequestDispatcher("/usersDetails.jsp");
         request.setAttribute("User", existuser);
+        if(existuser.getAvatar()!=null)
+        {
+            String encodedImage = Base64.getEncoder().encodeToString(existuser.getAvatar());
+            request.setAttribute("encodedImage", encodedImage);
+        }
         dispatcher.forward(request, response);
-
-
     }
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -148,7 +172,11 @@ public class UserController extends HttpServlet{
         String Email = request.getParameter("Email");
         String Password = request.getParameter("Password");
         String Role = request.getParameter("Role");
+        String encodedImage = request.getParameter("encodedImage");
+        String base64Image = encodedImage.replaceAll("data:image/\\w+;base64,", "");
+        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
         User updateuser = new User( userID ,FullName, birthDate,Address, Phone, Email,Password,Role);
+        updateuser.setAvatar(imageBytes);
         userDao.updateUser(updateuser);
         User user = userDao.selectUserById(userID);
         HttpSession session = request.getSession();
@@ -166,8 +194,12 @@ public class UserController extends HttpServlet{
         }
     }
     private void updatePasswordProfile(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String newPassword = request.getParameter("newPassword");
-        int userID = Integer.parseInt(request.getParameter("userID"));
+        HttpSession session = request.getSession();
+        String encodedNewPassword = request.getParameter("newPassword");
+        String encodedUserID = request.getParameter("userID");
+
+        String newPassword = new String(Base64.getDecoder().decode(encodedNewPassword));
+        int userID = Integer.parseInt(new String(Base64.getDecoder().decode(encodedUserID)));
         request.setCharacterEncoding("UTF-8");
         User updateuser = new User();
         updateuser.setUserID(userID);
@@ -178,7 +210,7 @@ public class UserController extends HttpServlet{
         else
             resultMsg = "Update password fail";
         User user = userDao.selectUserById(userID);
-        HttpSession session = request.getSession();
+
         session.setAttribute("userLogin", user);
         request.setAttribute("resultMsg",resultMsg);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
@@ -196,8 +228,17 @@ public class UserController extends HttpServlet{
         updateuser.setUserID(userID);
         updateuser.setPassword(newPassword);
         boolean isPasswordValid = userDao.checkUserOldPassword(updateuser);
-        request.setAttribute("isPasswordValid", isPasswordValid);
-        response.setContentType("application/json");
-        response.getWriter().write("{\"isPasswordValid\": " + isPasswordValid + "}");
+        if (isPasswordValid) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
 }

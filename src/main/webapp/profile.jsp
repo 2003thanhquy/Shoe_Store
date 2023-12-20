@@ -7,27 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.Base64"%>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
-          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <%
-        User userLogin = (User) request.getSession().getAttribute("userLogin");
-        if(userLogin == null) response.sendRedirect("login.jsp");
-    %>
-    <title><%=userLogin.getRole().equals("Manager")? "Admin Dashboard" : "Shoe Shop"%></title>
+
+    <jsp:include page="./css.jsp" />
+    <title>Admin Dashboard</title>
 </head>
 
 <body>
-<%
-    if(userLogin.getRole().equals("Manager")){
+  
+<jsp:include page="./header_admin.jsp" />
 
 
 %>
@@ -62,11 +56,6 @@
             <div class="col-md-3">
                 <a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#changePasswordModal">
                     <i class="fas fa-lock"></i> Change Password
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteAccountModal">
-                    <i class="fas fa-trash"></i> Delete Account
                 </a>
             </div>
         </div>
@@ -117,6 +106,15 @@
                                     <input type="hidden" name="Role" value="${userLogin.role}">
                                 </select>
                             </div>
+                            <!-- Hình ảnh -->
+                            <input type="hidden" name="encodedImage" id="encodedImage" value="${Base64.getEncoder().encodeToString(userLogin.getAvatar())}">
+                            <div class="col-md-12 d-flex flex-column justify-content-center">
+                                <div class="mb-3 text-center" style="height: 200px;">
+                                    <img id="image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(userLogin.getAvatar())}"
+                                         alt="Hình ảnh" class="img-fluid mx-auto d-block mw-100 mh-100">
+                                </div>
+                                <div class="text-center"><input type="file" id="selectImage" accept="image/*"></div>
+                            </div>
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-success btn-block">
                                     Save Changes
@@ -131,18 +129,7 @@
 </section>
 
 <!--Footer-->
-<footer id="main-footer" class="bg-dark text-white mt-5 p-5">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <p class="lead text-center">
-                    Copyright &copy; <span id="year"></span>
-                    Blogen
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
+<jsp:include page="./footer.jsp" />
 
 <!--Change Password Modal-->
 <div class="modal fade" id="changePasswordModal">
@@ -181,48 +168,10 @@
     </div>
 </div>
 
-<!--Delete Account Modal-->
-<div class="modal fade" id="deleteAccountModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <span class="modal-title h5">Delete Account</span>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <span class="h5">Are you sure you wish to delete your account? This will permanently erase your account and you will not be able to login again with your existing information.</span>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" data-dismiss="modal">Delete Account</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!--jQuery CDN-->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-<!--popper js CDN-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-
-<!--Bootstrap 4 CDN-->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
-
-<!--CKEditor CDN-->
-<script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
-
+<jsp:include page="./scripts.jsp" />
 <!--Custom JavaScript-->
 <script>
-    // Get the current year for the copyright
-    $('#year').text(new Date().getFullYear());
-
-    //CKEditor
     CKEDITOR.replace('editor1');
 </script>
 <script>
@@ -233,7 +182,7 @@
             var oldPassword = $("#oldPassword").val();
             var newPassword = $("#newPassword").val();
             var confirmNew = $("#confirmNew").val();
-            var userID = $("#userID").val();
+            var userID = $("#UserID").val();
             if (oldPassword.trim() === "") {
                 $("#oldPasswordError").text("Please enter old password");
                 return;
@@ -270,12 +219,19 @@
                 type: "POST",
                 url: "<%=request.getContextPath()%>/user/checkOldPassword_UserController",
                 data: requestData,
-                success: function(response){
-                    var isPasswordValid = response.isPasswordValid;
+                success: function(response, status, xhr){
+                    var isPasswordValid = xhr.status === 200;
+                    console.log(isPasswordValid);
                     if(isPasswordValid){
-                        localStorage.setItem('newPassword', newPassword);
-                        localStorage.setItem('userID', userID);
-                        window.location.href = "/user/updatePasswordProfile_UserController";
+                        var encodedNewPassword = btoa(newPassword);
+                        var encodedUserID = btoa(userID);
+
+                        var redirectUrl = "<%=request.getContextPath()%>/user/updatePasswordProfile_UserController" +
+                            "?newPassword=" + encodeURIComponent(encodedNewPassword) +
+                            "&userID=" + encodeURIComponent(encodedUserID);
+
+                        window.location.href = redirectUrl;
+
                     } else {
                         alert("Password change failed. Please check your old password.");
                     }
@@ -284,6 +240,22 @@
                     console.error("Ajax request failed:", status, error);
                 }
             });
+        });
+        document.getElementById('selectImage').addEventListener('change', function(event) {
+            var files = event.target.files;
+            if (files && files.length > 0) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var dataURL = reader.result;
+                    if (dataURL != null) {
+                        document.getElementById('image').src = dataURL;
+                        document.getElementById('encodedImage').value = dataURL;
+                    }
+                };
+                reader.readAsDataURL(files[0]);
+            } else {
+                console.error("No files selected or FileReader not supported.");
+            }
         });
     });
 </script>
@@ -313,6 +285,7 @@
         console.log('Document ready function');
         $('#myModal').modal('show');
     });
+
 </script>
 <% } %>
 </body>
