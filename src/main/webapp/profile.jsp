@@ -212,10 +212,15 @@
                     var isPasswordValid = xhr.status === 200;
                     console.log(isPasswordValid);
                     if(isPasswordValid){
-                        localStorage.setItem('newPassword', newPassword);
-                        localStorage.setItem('userID', userID);
+                        var encodedNewPassword = btoa(newPassword);
+                        var encodedUserID = btoa(userID);
 
-                        window.location.href = "<%=request.getContextPath()%>/user/updatePasswordProfile_UserController";
+                        var redirectUrl = "<%=request.getContextPath()%>/user/updatePasswordProfile_UserController" +
+                            "?newPassword=" + encodeURIComponent(encodedNewPassword) +
+                            "&userID=" + encodeURIComponent(encodedUserID);
+
+                        window.location.href = redirectUrl;
+
                     } else {
                         alert("Password change failed. Please check your old password.");
                     }

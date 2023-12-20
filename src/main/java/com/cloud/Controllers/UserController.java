@@ -175,8 +175,11 @@ public class UserController extends HttpServlet{
     }
     private void updatePasswordProfile(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         HttpSession session = request.getSession();
-        String newPassword = (String) session.getAttribute("newPassword");
-        int userID = Integer.parseInt((String) session.getAttribute("userID"));
+        String encodedNewPassword = request.getParameter("newPassword");
+        String encodedUserID = request.getParameter("userID");
+
+        String newPassword = new String(Base64.getDecoder().decode(encodedNewPassword));
+        int userID = Integer.parseInt(new String(Base64.getDecoder().decode(encodedUserID)));
         request.setCharacterEncoding("UTF-8");
         User updateuser = new User();
         updateuser.setUserID(userID);
