@@ -92,7 +92,7 @@ public class UserDao {
     }
     public boolean updateUserPassword(User user) throws SQLException {
         Connection conn = JDBCUtil.getConnection();
-        String sqlUpdatePass = "UPDATE users SET Password = ? WHERE UserID = ?";
+        String sqlUpdatePass = "UPDATE Users SET Password = ? WHERE UserID = ?";
         try {
 
             PreparedStatement ps = conn.prepareStatement(sqlUpdatePass);
