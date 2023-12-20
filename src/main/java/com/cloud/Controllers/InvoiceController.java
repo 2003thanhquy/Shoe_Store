@@ -29,7 +29,7 @@ public class InvoiceController extends HttpServlet {
             int status = Integer.parseInt(request.getParameter("status"));
     }
     void getInvoice(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        List<Invoice> lstData = invoiceDao.getInvoice();
+        List<Invoice> lstData = invoiceDao.getAllInvoices();
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
