@@ -74,10 +74,10 @@ public class CartDao {
     }
     public int create(Cart cart) {
         Connection conn = JDBCUtil.getConnection();
-        try (PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_CART_BY_CART_ID)) {
+        try (PreparedStatement preparedStatement = conn.prepareStatement(INSERT_NEW_CART)) {
             preparedStatement.setInt(1, cart.getUserID());
-            preparedStatement.setInt(1, cart.getProductID());
-            preparedStatement.setInt(1, cart.getQuantity());
+            preparedStatement.setInt(2, cart.getProductID());
+            preparedStatement.setInt(3, cart.getQuantity());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -90,7 +90,7 @@ public class CartDao {
     }
     public int update(int quantity, int cartid) {
         Connection conn = JDBCUtil.getConnection();
-        try (PreparedStatement preparedStatement = conn.prepareStatement(INSERT_NEW_CART)) {
+        try (PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_CART_BY_CART_ID)) {
             preparedStatement.setInt(1, quantity);
             preparedStatement.setInt(2, cartid);
 
