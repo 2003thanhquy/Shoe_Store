@@ -107,10 +107,19 @@ public class CartDao {
     public int deleteByCartId(int cartid) {
         Connection conn = JDBCUtil.getConnection();
         try (PreparedStatement preparedStatement = conn.prepareStatement(DELETE_CART_BY_CART_ID)) {
+            conn.setAutoCommit(false);
             preparedStatement.setInt(1, cartid);
 
-            return preparedStatement.executeUpdate();
+            int rowAffected = preparedStatement.executeUpdate();
+            conn.commit();
+
+            return  rowAffected;
         } catch (SQLException ex) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex2) {
+                ex2.printStackTrace();
+            }
             ex.printStackTrace();
         } finally {
             JDBCUtil.closeConnection(conn);
@@ -122,10 +131,19 @@ public class CartDao {
     public int deleteByUserId(int userid) {
         Connection conn = JDBCUtil.getConnection();
         try (PreparedStatement preparedStatement = conn.prepareStatement(DELETE_CART_BY_USER_ID)) {
+            conn.setAutoCommit(false);
             preparedStatement.setInt(1, userid);
 
-            return preparedStatement.executeUpdate();
+            int rowAffected = preparedStatement.executeUpdate();
+            conn.commit();
+
+            return  rowAffected;
         } catch (SQLException ex) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex2) {
+                ex2.printStackTrace();
+            }
             ex.printStackTrace();
         } finally {
             JDBCUtil.closeConnection(conn);

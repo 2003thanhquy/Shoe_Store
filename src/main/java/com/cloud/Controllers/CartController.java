@@ -72,37 +72,48 @@ public class CartController extends HttpServlet {
         int productid = Integer.parseInt(req.getParameter("productid"));
         int quantity = Integer.parseInt(req.getParameter("quantity"));
 
-        Cart cart = new Cart();
-        cart.setUserID(user.getUserID());
-        cart.setProductID(productid);
-        cart.setQuantity(quantity);
-        int status = cartDao.create(cart);
+        if (productDao.selectProById(productid).getStock() >= quantity) {
+            Cart cart = new Cart();
+            cart.setUserID(user.getUserID());
+            cart.setProductID(productid);
+            cart.setQuantity(quantity);
+            int status = cartDao.create(cart);
 
-        if (status > 0) {
-            //do something
+            if (status > 0) {
+                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
         } else {
-            //do something
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
     protected void updateItemQuantityInCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int cartid = Integer.parseInt(req.getParameter("cartid"));
+        int productid = Integer.parseInt(req.getParameter("productid"));
         int quantity = Integer.parseInt(req.getParameter("quantity"));
 
-        int status = cartDao.update(quantity, cartid);
+        if (productDao.selectProById(productid).getStock() >= quantity) {
+            int status = cartDao.update(quantity, cartid);
 
-        if (status > 0) {
-            //do something
+            if (status > 0) {
+                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
         } else {
-            //do something
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
     protected void removeItemInCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int cartid = Integer.parseInt(req.getParameter("productid"));
+        int cartid = Integer.parseInt(req.getParameter("cartid"));
 
         int status = cartDao.deleteByCartId(cartid);
 
         if (status > 0) {
-            resp.sendRedirect(req.getContextPath() + "/cart?action=list");
+            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 }

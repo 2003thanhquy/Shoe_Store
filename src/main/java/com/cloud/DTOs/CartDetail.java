@@ -13,6 +13,7 @@ public class CartDetail {
     private int quantity;
     private String productName;
     private BigDecimal productPrice;
+    private int productStock;
     private byte[] productImage;
     private String base64ProductImage;
 
@@ -23,6 +24,7 @@ public class CartDetail {
         this.quantity = cart.getQuantity();
         this.productName = product.getName();
         this.productPrice = product.getPrice();
+        this.productStock = product.getStock();
         this.productImage = product.getImage();
         setBase64ProductImage(this.productImage);
     }
@@ -73,6 +75,14 @@ public class CartDetail {
 
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
+    }
+
+    public int getProductStock() {
+        return productStock;
+    }
+
+    public void setProductStock(int productStock) {
+        this.productStock = productStock;
     }
 
     public byte[] getProductImage() {

@@ -20,6 +20,19 @@
     />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <style>
+        #cart-total {
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            padding: 0;
+            width: auto;
+            text-align: right;
+            color: inherit;
+        }
+    </style>
 </head>
 <body>
 <!-- Navigation-->
@@ -131,6 +144,7 @@
                                                 <img src="data:image/jpeg;base64, ${item.base64ProductImage}" class="img-fluid rounded-3" style="width: 100px; height: 100px;" alt="...">
                                                 <div class="flex-column ms-4">
                                                     <p class="mb-2">${item.productName}</p>
+                                                    <p class="mb-2" style="font-weight: 300;">Stock: ${item.productStock}</p>
                                                 </div>
                                             </div>
                                         </th>
@@ -140,16 +154,14 @@
                                         <td class="align-middle">
                                             <div class="d-flex flex-row">
                                                 <button class="btn btn-link px-2"
-                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                        disabled>
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                     <i class="bi bi-dash-lg"></i>
                                                 </button>
-                                                <input id="input-quantity" min="0" name="quantity" value="${item.quantity}" type="number"
+                                                <input id="input-quantity" min="0" max="${item.productStock}" name="quantity" value="${item.quantity}" type="number"
                                                        class="form-control form-control-sm" style="width: 50px;" />
 
                                                 <button class="btn btn-link px-2"
-                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                        disabled>
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                                     <i class="bi bi-plus-lg"></i>
                                                 </button>
                                             </div>
@@ -168,70 +180,36 @@
                 <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
                     <div class="card-body p-4">
                         <div class="row">
-                            <div class="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
-                                <form>
-                                    <div class="d-flex flex-row pb-3">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1v"
-                                                   value="" aria-label="..." checked />
-                                        </div>
-                                        <div class="rounded border w-100 p-3">
-                                            <p class="d-flex align-items-center mb-0">
-                                                Credit Card
-                                            </p>
-                                        </div>
+                            <div class="col">
+                                <form id="frmCreateOrder" method="post">
+                                    <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
+                                        <label for="cart-total" class="mb-2">Total</label>
+                                        <input id="cart-total" class="mb-2" name="amount" value="100000" readonly>
                                     </div>
-                                    <div class="d-flex flex-row pb-3">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel2v"
-                                                   value="" aria-label="..." />
-                                        </div>
-                                        <div class="rounded border w-100 p-3">
-                                            <p class="d-flex align-items-center mb-0">
-                                                Debit Card
-                                            </p>
-                                        </div>
+
+                                    <hr class="my-4">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="typepayment" id="payment--cod" value="0" checked>
+                                        <label class="form-check-label" for="payment--cod">
+                                            COD
+                                        </label>
                                     </div>
-                                    <div class="d-flex flex-row">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel3v"
-                                                   value="" aria-label="..." />
-                                        </div>
-                                        <div class="rounded border w-100 p-3">
-                                            <p class="d-flex align-items-center mb-0">
-                                                PayPal
-                                            </p>
-                                        </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="typepayment" id="payment--vnpay" value="1">
+                                        <label class="form-check-label" for="payment--vnpay">
+                                            VNPAY
+                                        </label>
                                     </div>
+
+                                    <button type="submit" class="order-confirm btn btn-primary btn-block btn-lg">
+                                        <div class="d-flex justify-content-between">
+                                            <span>Confirm Order</span>
+                                        </div>
+                                    </button>
                                 </form>
                             </div>
-                            <div class="col-lg-4 col-xl-3">
-                                <div class="d-flex justify-content-between" style="font-weight: 500;">
-                                    <p class="mb-2">Subtotal</p>
-                                    <p class="mb-2">$23.49</p>
-                                </div>
-
-                                <div class="d-flex justify-content-between" style="font-weight: 500;">
-                                    <p class="mb-0">Shipping</p>
-                                    <p class="mb-0">$2.99</p>
-                                </div>
-
-                                <hr class="my-4">
-
-                                <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
-                                    <p class="mb-2">Total (tax included)</p>
-                                    <p class="mb-2">$26.48</p>
-                                </div>
-
-                                <button type="button" class="btn btn-primary btn-block btn-lg">
-                                    <div class="d-flex justify-content-between">
-                                        <span>Checkout</span>
-                                        <span>$26.48</span>
-                                    </div>
-                                </button>
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -250,5 +228,68 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
+<script>
+    $("document").ready(function () {
+        let cartTotal = 0;
+        let cartItems = $("tr[cart-id]");
+        cartItems.each(function () {
+            let quantity = $(this).find("#input-quantity").val();
+            let price = $(this).find("td:nth-child(2)").text();
+            let subtotal = quantity * price;
+            cartTotal += subtotal;
+        });
+        $("#cart-total").val(cartTotal);
+    });
+
+    $("#frmCreateOrder").submit(function (event) {
+        event.preventDefault();
+
+        var postData = $("#frmCreateOrder").serialize();
+        let vnpayChecked = $("#payment--vnpay").is(":checked");
+
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.getContextPath()}/order?action=new",
+            data: postData,
+            success: function (x) {
+                if (vnpayChecked) {
+                    vnpayAjax();
+                } else {
+                    window.location.href = "${pageContext.request.getContextPath()}/index.jsp";
+                }
+            },
+            error: function () {
+                // Handle errors here
+                alert("Error occurred while processing the order. Please try again.");
+            }
+        });
+    });
+
+    function vnpayAjax() {
+        var postData = $("#frmCreateOrder").serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.getContextPath()}/vnpayajax",
+            data: postData,
+            dataType: 'JSON',
+            success: function (x) {
+                if (x.code === '00') {
+                    if (window.vnpay) {
+                        vnpay.open({width: 768, height: 600, url: x.data});
+                    } else {
+                        location.href = x.data;
+                    }
+                } else {
+                    alert(x.Message);
+                }
+            },
+            error: function () {
+                alert("Error occurred during VNPAY processing. Please try again.");
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
