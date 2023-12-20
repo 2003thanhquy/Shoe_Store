@@ -256,7 +256,7 @@
                 if (vnpayChecked) {
                     vnpayAjax();
                 } else {
-                    window.location.href = "${pageContext.request.getContextPath()}/index.jsp";
+                    window.location.href = "${pageContext.request.getContextPath()}/home";
                 }
             },
             error: function () {
