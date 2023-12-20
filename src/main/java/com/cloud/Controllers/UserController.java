@@ -93,7 +93,11 @@ public class UserController extends HttpServlet{
         String Email = request.getParameter("Email");
         String Password = request.getParameter("Password");
         String Role = request.getParameter("Role");
+        String encodedImage = request.getParameter("encodedImage");
+        String base64Image = encodedImage.replaceAll("data:image/\\w+;base64,", "");
+        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
         User user = new User(FullName,birthDate,Address, Phone, Email,Password,Role);
+        user.setAvatar(imageBytes);
         userDao.insertUser(user);
         response.sendRedirect("list_UserController");
     }
@@ -138,9 +142,12 @@ public class UserController extends HttpServlet{
         User existuser = userDao.selectUserById(userID );
         RequestDispatcher dispatcher = request.getRequestDispatcher("/usersDetails.jsp");
         request.setAttribute("User", existuser);
+        if(existuser.getAvatar()!=null)
+        {
+            String encodedImage = Base64.getEncoder().encodeToString(existuser.getAvatar());
+            request.setAttribute("encodedImage", encodedImage);
+        }
         dispatcher.forward(request, response);
-
-
     }
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         request.setCharacterEncoding("UTF-8");

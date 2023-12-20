@@ -111,15 +111,19 @@
                         <input type="password" id = "Password" name = "Password" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="password2">Confirm Password</label>
-                        <input type="password" id = "password2" class="form-control">
-                    </div>
-                    <div class="form-group">
                         <label for="Role">Role</label>
                         <select id="Role" name = "Role" class ="form-control">
                             <option value="Customer">Customer</option>
                             <option value="Manager">Manager</option>
                         </select>
+                    </div>
+                    <input type="hidden" name="encodedImage" id="encodedImage" value="">
+                    <div class="col-md-12 d-flex flex-column justify-content-center">
+                        <div class="mb-3 text-center" style="height: 200px;">
+                            <img id="image" src=""
+                                 alt="Hình ảnh" class="img-fluid mx-auto d-block mw-100 mh-100">
+                        </div>
+                        <div class="text-center"><input type="file" id="selectImage" accept="image/*"></div>
                     </div>
                     <div class="modal-footer">
                         <button type = "submit" class="btn btn-warning">Save Add</button>
@@ -191,6 +195,24 @@
 <!--jQuery CDN-->
 <jsp:include page="./scripts.jsp" />
 <!--Custom JavaScript-->
+<script>
+    document.getElementById('selectImage').addEventListener('change', function(event) {
+        var files = event.target.files;
+        if (files && files.length > 0) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var dataURL = reader.result;
+                if (dataURL != null) {
+                    document.getElementById('image').src = dataURL;
+                    document.getElementById('encodedImage').value = dataURL;
+                }
+            };
+            reader.readAsDataURL(files[0]);
+        } else {
+            console.error("No files selected or FileReader not supported.");
+        }
+    });
+</script>
 </body>
 
 </html>
