@@ -174,8 +174,9 @@ public class UserController extends HttpServlet{
         }
     }
     private void updatePasswordProfile(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String newPassword = request.getParameter("newPassword");
-        int userID = Integer.parseInt(request.getParameter("userID"));
+        HttpSession session = request.getSession();
+        String newPassword = (String) session.getAttribute("newPassword");
+        int userID = Integer.parseInt((String) session.getAttribute("userID"));
         request.setCharacterEncoding("UTF-8");
         User updateuser = new User();
         updateuser.setUserID(userID);
@@ -186,7 +187,7 @@ public class UserController extends HttpServlet{
         else
             resultMsg = "Update password fail";
         User user = userDao.selectUserById(userID);
-        HttpSession session = request.getSession();
+
         session.setAttribute("userLogin", user);
         request.setAttribute("resultMsg",resultMsg);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
@@ -204,9 +205,11 @@ public class UserController extends HttpServlet{
         updateuser.setUserID(userID);
         updateuser.setPassword(newPassword);
         boolean isPasswordValid = userDao.checkUserOldPassword(updateuser);
-        request.setAttribute("isPasswordValid", isPasswordValid);
-        response.setContentType("application/json");
-        response.getWriter().write("{\"isPasswordValid\": " + isPasswordValid + "}");
+        if (isPasswordValid) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
     private void logout(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         HttpSession session = request.getSession(false);
