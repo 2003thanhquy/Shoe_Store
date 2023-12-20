@@ -10,6 +10,23 @@ public class Category implements Serializable {
     private String categoryName;
     private Date dateAdd;
 
+    public Category()
+    {
+        super();
+    }
+
+    public Category(int categoryID, String categoryName, Date dateAdd)
+    {
+        this.categoryID = categoryID;
+        this.categoryName = categoryName;
+        this.dateAdd = dateAdd;
+    }
+    public Category(String categoryName, Date dateAdd)
+    {
+        this.categoryName = categoryName;
+        this.dateAdd = dateAdd;
+    }
+
     // Getters and Setters
     public int getCategoryID() {
         return categoryID;

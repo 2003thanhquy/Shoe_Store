@@ -60,7 +60,7 @@ public class UserController extends HttpServlet{
                 case "/updatePasswordProfile_UserController":
                     updatePasswordProfile(request, response);
                     break;
-                case "checkOldPassword_UserController":
+                case "/checkOldPassword_UserController":
                     checkOldPassword(request, response);
                     break;
                 case "logout_UserController":
@@ -115,7 +115,8 @@ public class UserController extends HttpServlet{
             HttpSession session = request.getSession();
             session.setAttribute("userLogin", user);
             if(user.getRole().equals("Manager") || user.getRole().equals("manager"))
-                response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
+                //response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
+                response.sendRedirect(request.getContextPath() + "/pro/list_product");
             else
                 response.sendRedirect(request.getContextPath()+"/index.jsp");
         }

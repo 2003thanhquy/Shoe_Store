@@ -107,7 +107,7 @@
                         <h4 class="display-4">
                             <i class="fas fa-folder"></i> 4
                         </h4>
-                        <a href="categories.jsp" class="btn btn-outline-light btn-sm">View</a>
+                        <a  href="<%= request.getContextPath() %>/category/list_Category" class="btn btn-outline-light btn-sm">View</a>
                     </div>
                 </div>
 

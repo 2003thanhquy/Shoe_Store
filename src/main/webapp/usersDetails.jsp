@@ -37,12 +37,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <a href="index.jsp" class="btn btn-light btn-block border">
+                <a href="index_admin.jsp" class="btn btn-light btn-block border">
                     <i class="fas fa-arrow-left"></i> Back To Dashboard
                 </a>
             </div>
             <div class="col-md-3">
-                <a href="users.jsp" class="btn btn-light btn-block border">
+                <a href="<%= request.getContextPath() %>/user/list_UserController" class="btn btn-light btn-block border">
                     <i class="fas fa-arrow-left"></i> Back To Users
                 </a>
             </div>
@@ -74,7 +74,7 @@
                         <h4>Edit User Information</h4>
                     </div>
                     <div class="modal-body" >
-                        <form action="<%= request.getContextPath() %>/update_UserController" method = "post" >
+                        <form action="<%= request.getContextPath() %>/user/update_UserController" method = "post" >
                             <input type="hidden" name="from" value="userDetails">
                             <div class="form-group">
                                 <label for="UserID">User ID</label>

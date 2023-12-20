@@ -19,7 +19,7 @@
 </head>
 
 <body>
-
+  
 <jsp:include page="./header_admin.jsp" />
 
 <!--Header-->
