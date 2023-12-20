@@ -85,6 +85,7 @@
             <div class="modal-body">
                 <form action="<%= request.getContextPath() %>/user/insert_UserController" method="post">
 
+                    <input type="hidden" name="from" value=users>
                     <div class="form-group">
                         <label for="FullName">Full Name</label>
                         <input type="text" id = "FullName" name ="FullName" class="form-control">

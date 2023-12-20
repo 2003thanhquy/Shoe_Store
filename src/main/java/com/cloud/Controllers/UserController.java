@@ -99,7 +99,19 @@ public class UserController extends HttpServlet{
         User user = new User(FullName,birthDate,Address, Phone, Email,Password,Role);
         user.setAvatar(imageBytes);
         userDao.insertUser(user);
-        response.sendRedirect("list_UserController");
+        String from = request.getParameter("from");
+        if ("signup".equals(from)) {
+            request.setAttribute("email",Email);
+            request.setAttribute("password",Password);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+            try{
+                dispatcher.forward(request, response);
+            }catch (ServletException e) {
+                e.printStackTrace();
+            }
+        } else if ("users".equals(from)) {
+            response.sendRedirect("list_UserController");
+        }
     }
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int UserID = Integer.parseInt(request.getParameter("UserID"));
