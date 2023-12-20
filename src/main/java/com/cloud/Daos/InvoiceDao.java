@@ -17,7 +17,6 @@ public class InvoiceDao {
     private String sqlUpdate = "Update ShoeStore.Invoices\n" +
             "set status = ?\n" +
             "where InvoiceID =?";
-
     private final String sqlInsert = "INSERT INTO Invoices (OrderID, InvoiceDateTime, Total, TypePayment, Status) VALUES (?, now(), ?, ?, ?)";
 
     public List<Invoice> getInvoice(){
@@ -62,7 +61,6 @@ public class InvoiceDao {
         }
         return false;
     }
-
     public boolean insertInvoice(Invoice invoice) {
         Connection conn = JDBCUtil.getConnection();
         try {
