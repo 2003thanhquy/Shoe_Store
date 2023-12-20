@@ -68,76 +68,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!---product 1---->
-                        <c:forEach var="product" items="listProduct">
-                        <tr>
-                            <td>1</td>
-                            <td>Post One</td>
-                            <td>Web Development</td>
-                            <td>November 23 2020</td>
-                            <td>
-                                <a href="postDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
+                        <!---Post 1--->
+                        <c:forEach var="product" items="${listProduct}">
+                            <tr>
+                                <td name="ProductID" value ="${product.productID}">${product.productID}</td>
+                                <td>${product.name}</td>
+                                <td>${product.categoryID}</td>
+                                <td>${product.dateAdd}</td>
+                                <td>
+                                    <a href="edit_product?ProductID=<c:out value='${product.productID}' />" class="btn btn-secondary">
+                                        <i class="fas fa-angle-double-right"></i> Details
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="delete_product?ProductID=<c:out value='${product.productID}' />" class="btn btn-secondary" style="background-color:indianred">
+                                        <i class="fas fa-angle-double-right"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
                         </c:forEach>
-                        <!---product 1---->
-                        <tr>
-                            <td>2</td>
-                            <td>Post Two</td>
-                            <td>Tech Gadgets</td>
-                            <td>November 22 2020</td>
-                            <td>
-                                <a href="postDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Post Three</td>
-                            <td>Web Development</td>
-                            <td>November 20 2020</td>
-                            <td>
-                                <a href="postDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Post Four</td>
-                            <td>Business</td>
-                            <td>November 18 2020</td>
-                            <td>
-                                <a href="postDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Post Five</td>
-                            <td>Web Development</td>
-                            <td>November 15 2020</td>
-                            <td>
-                                <a href="postDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Post Six</td>
-                            <td>Health & Wellness</td>
-                            <td>November 5 2020</td>
-                            <td>
-                                <a href="postDetails.jsp" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </a>
-                            </td>
-                        </tr>
+                        <!---Post 1--->
                         </tbody>
                     </table>
 
