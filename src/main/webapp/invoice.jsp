@@ -156,19 +156,19 @@
                     <!--Pagination-->
                     <c:if test="${not empty lstData}">
                         <div class="pagination" id="pagination">
-                            <c:url value="/invoice" var="url">
+                            <c:url value="/admin/invoice" var="url">
                                 <c:param name="page" value="${currentPage + 1}" />
                             </c:url>
 
                             <c:if test="${currentPage > 1}">
-                                <c:url value="/invoice" var="prevUrl">
+                                <c:url value="/admin/invoice" var="prevUrl">
                                     <c:param name="page" value="${currentPage - 1}" />
                                 </c:url>
                                 <a href="${prevUrl}" class="page-link">Previous</a>
                             </c:if>
 
                             <c:forEach begin="1" end="${totalPages}" var="i">
-                                <c:url value="/invoice" var="pageUrl">
+                                <c:url value="/admin/invoice" var="pageUrl">
                                     <c:param name="page" value="${i}" />
                                 </c:url>
 
@@ -181,7 +181,7 @@
                                 </c:if>
                             </c:forEach>
 
-                            <c:url value="/invoice" var="url">
+                            <c:url value="/admin/invoice" var="url">
                                 <c:param name="page" value="${currentPage + 1}" />
                             </c:url>
 
