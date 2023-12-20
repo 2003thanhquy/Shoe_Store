@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.cloud.Models.User" %><%--
   Created by IntelliJ IDEA.
   User: Asus ROG
   Date: 12/3/2023
@@ -14,6 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <jsp:include page="./css.jsp" />
     <title>Admin Dashboard</title>
 </head>
@@ -22,6 +23,16 @@
   
 <jsp:include page="./header_admin.jsp" />
 
+
+%>
+    <jsp:include page="admin_navbar.jsp"/>
+<%
+    }else{
+%>
+    <jsp:include page="homepage_navbar.jsp"/>
+<%
+    };
+%>
 <!--Header-->
 <header id="main-header" class="py-2 bg-primary text-white">
     <div class="container">

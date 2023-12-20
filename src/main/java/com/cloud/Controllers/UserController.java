@@ -134,7 +134,7 @@ public class UserController extends HttpServlet{
                 //response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
                 response.sendRedirect(request.getContextPath() + "/pro/list_product");
             else
-                response.sendRedirect(request.getContextPath()+"/index.jsp");
+                response.sendRedirect(request.getContextPath()+"/home");
         }
         else {
             request.setAttribute("errMsg", "Email or Password is incorrect");

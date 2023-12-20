@@ -2,11 +2,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -15,22 +15,20 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-      rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+            rel="stylesheet"
     />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" />
-  </head>
-  <body>
-    <!-- Navigation-->
-
-    <jsp:include page="homepage_navbar.jsp"/>
-
+</head>
+<body>
+<!-- Navigation-->
+<jsp:include page="homepage_navbar.jsp"/>
 <!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shoe Shop</h1>
+            <h1 class="display-4 fw-bolder">New Arrivals</h1>
         </div>
     </div>
 </header>
@@ -57,9 +55,10 @@
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">${product.name}</h5>
 
+                                <!-- Product price-->
                                 <c:if test="${product.discount != 0}">
                                     <span class="text-muted text-decoration-line-through"
-                                    >$${product.price}</span
+                                    >  $${product.price}</span
                                     >
                                 </c:if>
                                 $${(100 - product.discount) * product.price / 100}
