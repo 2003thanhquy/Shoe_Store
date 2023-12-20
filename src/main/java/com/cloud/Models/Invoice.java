@@ -9,8 +9,37 @@ public class Invoice implements Serializable {
 
     private int invoiceID;
     private int orderID;
+
+
+
     private Date invoiceDateTime;
     private Double total;
+    private int typePayment;
+
+    public String getTypePaymentString() {
+        return (typePayment == 1) ? "Credit" : "COD";
+    }
+
+    public int getTypePayment() {
+        return typePayment;
+    }
+    public void setTypePayment(int typePayment) {
+        this.typePayment = typePayment;
+    }
+
+    public String getStatusString() {
+        return (status ==1 )? "Done": "Pending";
+    }
+    public int getStatus() {
+        return status;
+    }
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    private int status;
+    public Invoice() {
+    }
 
     // Getters and Setters
     public int getInvoiceID() {
@@ -44,4 +73,5 @@ public class Invoice implements Serializable {
     public void setTotal(Double total) {
         this.total = total;
     }
+
 }
