@@ -252,6 +252,7 @@
             url: "${pageContext.request.getContextPath()}/order?action=new",
             data: postData,
             success: function (x) {
+                alert("Success! Your order has been processed.");
                 if (vnpayChecked) {
                     vnpayAjax();
                 } else {
