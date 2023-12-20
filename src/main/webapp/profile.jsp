@@ -47,11 +47,6 @@
                     <i class="fas fa-lock"></i> Change Password
                 </a>
             </div>
-            <div class="col-md-3">
-                <a href="#" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteAccountModal">
-                    <i class="fas fa-trash"></i> Delete Account
-                </a>
-            </div>
         </div>
     </div>
 </section>
@@ -162,26 +157,6 @@
     </div>
 </div>
 
-<!--Delete Account Modal-->
-<div class="modal fade" id="deleteAccountModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <span class="modal-title h5">Delete Account</span>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <span class="h5">Are you sure you wish to delete your account? This will permanently erase your account and you will not be able to login again with your existing information.</span>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" data-dismiss="modal">Delete Account</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!--jQuery CDN-->
 <jsp:include page="./scripts.jsp" />
 <!--Custom JavaScript-->
@@ -196,7 +171,7 @@
             var oldPassword = $("#oldPassword").val();
             var newPassword = $("#newPassword").val();
             var confirmNew = $("#confirmNew").val();
-            var userID = $("#userID").val();
+            var userID = $("#UserID").val();
             if (oldPassword.trim() === "") {
                 $("#oldPasswordError").text("Please enter old password");
                 return;
@@ -233,12 +208,14 @@
                 type: "POST",
                 url: "<%=request.getContextPath()%>/user/checkOldPassword_UserController",
                 data: requestData,
-                success: function(response){
-                    var isPasswordValid = response.isPasswordValid;
+                success: function(response, status, xhr){
+                    var isPasswordValid = xhr.status === 200;
+                    console.log(isPasswordValid);
                     if(isPasswordValid){
                         localStorage.setItem('newPassword', newPassword);
                         localStorage.setItem('userID', userID);
-                        window.location.href = "/user/updatePasswordProfile_UserController";
+
+                        window.location.href = "<%=request.getContextPath()%>/user/updatePasswordProfile_UserController";
                     } else {
                         alert("Password change failed. Please check your old password.");
                     }
