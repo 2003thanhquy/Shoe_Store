@@ -321,6 +321,8 @@
 
         let url = window.location.href;
         console.log(url,$(button).data('whever'))
+        var pdetail = jQuery("#p-detail").find('tbody');
+        pdetail.empty();
         jQuery.ajax({
             url: url,
             method: "GET",
@@ -329,8 +331,6 @@
             },
             success: function (data) {
                 console.log(data)
-                var pdetail = jQuery("#p-detail").find('tbody');
-                pdetail.empty();
                 jQuery(data).each(function (index, element) {
                     pdetail.append(`<tr class="row100 body"><td class="cell100 column1">\${element.productID}</td><td class="cell100 column2">\${element.name}</td><td class="cell100 column3">\${element.price}</td><td class="cell100 column4">\${element.quantity}</td></tr>`);
                 });
