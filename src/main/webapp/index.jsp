@@ -68,7 +68,7 @@
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
-                                <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                                <span class="btn btn-outline-dark mt-auto" onclick="addCart(productid =${product.productID})">Add to cart</span>
                             </div>
                         </div>
                     </div>
@@ -89,5 +89,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
+  <script>
+
+      function addCart(productid){
+          jQuery.ajax({
+              url: "<%=request.getContextPath()%>/cart?action=add&productid=" + productid + "&quantity=1",
+              method: "GET",
+              success:function (){
+                 alert("success,add to cart")
+              },
+              error: function (){
+          }
+          })
+      }
+
+  </script>
 </body>
 </html>
