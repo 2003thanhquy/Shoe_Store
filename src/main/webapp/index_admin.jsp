@@ -38,7 +38,7 @@
                     <a href="posts.jsp" class="nav-link">Posts</a>
                 </li>
                 <li class="nav-item px-2">
-                    <a href="categories.jsp" class="nav-link">Categories</a>
+                    <a href="<%= request.getContextPath() %>/category/list_Category" class="nav-link">Categories</a>
                 </li>
                 <li class="nav-item px-2">
                     <a href="<%= request.getContextPath() %>/user/list_UserController" class="nav-link">Users</a>
@@ -156,7 +156,7 @@
                         <h4 class="display-4">
                             <i class="fas fa-folder"></i> 4
                         </h4>
-                        <a href="categories.jsp" class="btn btn-outline-light btn-sm">View</a>
+                        <a  href="<%= request.getContextPath() %>/category/list_Category" class="btn btn-outline-light btn-sm">View</a>
                     </div>
                 </div>
 

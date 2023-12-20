@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <head>
   <meta charset="UTF-8">
@@ -30,16 +32,16 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav">
         <li class="nav-item px-2">
-          <a href="<%= request.getContextPath() %>/index_admin.jsp" class="nav-link">Dashboard</a>
+          <a href="<%= request.getContextPath() %>/pro/list_product" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item px-2">
           <a href="posts.jsp" class="nav-link">Posts</a>
         </li>
         <li class="nav-item px-2">
-          <a href="categories.jsp" class="nav-link active">Categories</a>
+          <a href="<%= request.getContextPath() %>/category/list_Category" class="nav-link">Categories</a>
         </li>
         <li class="nav-item px-2">
-          <a href="users.jsp" class="nav-link">Users</a>
+          <a href="<%= request.getContextPath() %>/user/list_UserController" class="nav-link active">Users</a>
         </li>
       </ul>
 
@@ -117,22 +119,27 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="">
+        <form action="<%= request.getContextPath() %>/category/Insert_Categories" method="post">
+
           <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" id = "title" class="form-control">
+            <label for="CategoryName">Category Name :</label>
+            <input type="text" id = "CategoryName" name ="CategoryName" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="DateAdd">Date Add :</label>
+            <input type="date" id = "DateAdd"  name ="DateAdd" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type = "submit" class="btn btn-warning">Save Add</button>
           </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" data-dismiss="modal">Save Changes</button>
       </div>
     </div>
   </div>
 </div>
 <!--Categories-->
-<section id="categories">
-  <div class="container">
+<section id="Categories">
+  <div class="container" style="white-space:nowrap;">
     <div class="row">
       <div class="col">
         <div class="card">
@@ -142,53 +149,33 @@
           <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Date Added</th>
+              <th>CategoryID</th>
+              <th>CategorieName</th>
+              <th style="white-space:nowrap;" >DateAdd</th>
+              <th></th>
               <th></th>
             </tr>
             </thead>
             <tbody>
             <tr>
-              <td>1</td>
-              <td>Tech Gadgets</td>
-              <td>November 22 2020</td>
+              <c:forEach var = "category" items = "${listcategory}">
+            <tr >
+              <td name="CategoryID" value ="${category.categoryID}">${category.categoryID}</td>
+              <td>${category.categoryName}</td>
+              <td>${category.dateAdd}</td>
               <td>
-                <a href="categoriesDetails.jsp" class="btn btn-secondary">
+                <a href="ShowFormEdit_Categories?CategoryID=<c:out value='${category.categoryID}' />"  class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Business</td>
-              <td>November 18 2020</td>
               <td>
-                <a href="categoriesDetails.jsp" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
+                <a href="delete_Categories?CategoryID=<c:out value='${category.categoryID}' />" class="btn btn-secondary" style="background-color:indianred">
+                  <i class="fas fa-angle-double-right"></i> Delete
                 </a>
               </td>
+              </c:forEach>
             </tr>
-            <tr>
-              <td>3</td>
-              <td>Web Development</td>
-              <td>November 15 2020</td>
-              <td>
-                <a href="categoriesDetails.jsp" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Health & Wellness</td>
-              <td>November 5 2020</td>
-              <td>
-                <a href="categoriesDetails.jsp" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
+
             </tbody>
           </table>
         </div>

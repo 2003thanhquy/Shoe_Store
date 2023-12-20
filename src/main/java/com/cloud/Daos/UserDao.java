@@ -1,7 +1,7 @@
 package com.cloud.Daos;
 
 import com.cloud.Models.User;
-import com.cloud.Util.JDBCUtil;
+import com.cloud.Util.JDBCUtil  ;
 import com.cloud.Util.HandleExeption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
