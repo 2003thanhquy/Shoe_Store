@@ -22,7 +22,7 @@
                     <a href="posts.jsp" class="nav-link">Posts</a>
                 </li>
                 <li class="nav-item px-2">
-                    <a href="categories.jsp" class="nav-link">Categories</a>
+                    <a href="<%= request.getContextPath() %>/category/list_Category" class="nav-link">Categories</a>
                 </li>
                 <li class="nav-item px-2">
                     <a href="<%= request.getContextPath() %>/user/list_UserController" class="nav-link">Users</a>

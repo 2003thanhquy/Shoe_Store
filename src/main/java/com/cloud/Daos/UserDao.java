@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    String sqlInsert = "INSERT INTO Users (FullName, BirthDate, Address, Phone, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String sqlInsert = "INSERT INTO Users (FullName, BirthDate, Address, Phone, Email, Password, Role, Avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     String sqlGetAll = "SELECT * FROM Users";
     String sqlUpdate = "UPDATE Users SET FullName = N?, BirthDate = ?, Address = N?, Phone = ?, Email = ?, Role = ?, Avatar = ? WHERE UserID = ?";
     String DELETE_User_By_UserID = "DELETE FROM Users WHERE UserID = ?";
@@ -53,6 +53,7 @@ public class UserDao {
             ps.setString(5, user.getEmail());
             ps.setString(6, user.getPassword());
             ps.setString(7, user.getRole());
+            ps.setBytes(8, user.getAvatar());
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
