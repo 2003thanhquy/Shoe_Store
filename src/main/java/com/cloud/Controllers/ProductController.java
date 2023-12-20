@@ -120,7 +120,7 @@ public class ProductController extends HttpServlet {
         HttpSession session = request.getSession();
         List<Product> listProduct = productDao.getAllProducts();
         request.setAttribute("listProduct", listProduct);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index_admin.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/posts.jsp");
         dispatcher.forward(request, response);
     }
 }

@@ -48,7 +48,7 @@ public class InvoiceController extends HttpServlet {
 
     }
     void getInvoice(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        List<Invoice> lstData = invoiceDao.getAllInvoices();
+        List<Invoice> lstData = invoiceDao.getInvoice();
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
