@@ -71,7 +71,7 @@
                 }
               %>
               <input type="submit" value="Login" class="btn btn-primary btn-block">
-              <a class="btn btn-primary btn-block" href="./signup.jsp">Sign Up</a>
+              <a class="btn btn-primary btn-block" href="<%= request.getContextPath() %>/signup.jsp">Sign Up</a>
             </form>
           </div>
         </div>
