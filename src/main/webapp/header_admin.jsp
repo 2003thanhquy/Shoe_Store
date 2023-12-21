@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav">
                 <li class="nav-item px-2">
-                    <a href="<%= request.getContextPath() %>/pro/list_product" class="nav-link active">Dashboard</a>
+                    <a href="<%= request.getContextPath() %>/pro/dashboard" class="nav-link active">Dashboard</a>
                 </li>
                 <li class="nav-item px-2">
                     <a href="<%= request.getContextPath() %>/pro/list_product" class="nav-link">Posts</a>

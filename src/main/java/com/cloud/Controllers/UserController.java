@@ -139,7 +139,7 @@ public class UserController extends HttpServlet{
             Session.avatar = user.getAvatar();
             if(user.getRole().equals("Manager") || user.getRole().equals("manager"))
                 //response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
-                response.sendRedirect(request.getContextPath() + "/pro/list_product");
+                response.sendRedirect(request.getContextPath() + "/pro/dashboard");
             else
                 response.sendRedirect(request.getContextPath()+"/home");
         }
