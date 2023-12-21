@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceDao {
-    private final String sqlGet = "SELECT * FROM ShoeStore.Invoices";
+    private final String sqlGet = "SELECT * FROM ShoeStore.Invoices order by InvoiceID desc";
     private String sqlUpdate = "Update ShoeStore.Invoices\n" +
             "set status = ?\n" +
             "where InvoiceID =?";
