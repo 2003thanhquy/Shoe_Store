@@ -38,6 +38,10 @@ public class ProductController extends HttpServlet {
                 System.out.println("list");
                 listProduct(request, response);
                 break;
+            case "/dashboard" :
+                System.out.println("list");
+                dashboard(request, response);
+                break;
             case "/insert_product":
                 addProduct(request, response);
                 break;
@@ -60,6 +64,14 @@ public class ProductController extends HttpServlet {
                 break;
         }
 
+    }
+
+    private void dashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        List<Product> listProduct = productDao.getAllProducts();
+        request.setAttribute("listProduct", listProduct);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index_admin.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
