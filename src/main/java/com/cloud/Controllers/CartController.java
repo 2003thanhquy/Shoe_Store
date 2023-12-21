@@ -5,6 +5,7 @@ import com.cloud.Daos.CartDao;
 import com.cloud.Daos.ProductDao;
 import com.cloud.Models.Cart;
 import com.cloud.Models.Product;
+import com.cloud.Models.Session;
 import com.cloud.Models.User;
 
 import javax.servlet.ServletException;
@@ -51,10 +52,10 @@ public class CartController extends HttpServlet {
     }
 
     protected void getAllItemsInCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession(false).getAttribute("userLogin");
-
+        //User user = (User) req.getSession(false).getAttribute("userLogin");
+        int userID  = Session.userID;
         List<CartDetail> cartDetails = new ArrayList<>();
-        List<Cart> carts = cartDao.findAll(user.getUserID());
+        List<Cart> carts = cartDao.findAll(userID);
         if (carts == null) {
             req.setAttribute("cartEmpty", "Your cart is empty");
         } else {
@@ -68,13 +69,14 @@ public class CartController extends HttpServlet {
         req.getRequestDispatcher("user_cart.jsp").forward(req, resp);
     }
     protected void addNewItemToCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession(false).getAttribute("userLogin");
+        //User user = (User) req.getSession(false).getAttribute("userLogin");
+        int userID  = Session.userID;
         int productid = Integer.parseInt(req.getParameter("productid"));
         int quantity = Integer.parseInt(req.getParameter("quantity"));
 
         if (productDao.selectProById(productid).getStock() >= quantity) {
             Cart cart = new Cart();
-            cart.setUserID(user.getUserID());
+            cart.setUserID(userID);
             cart.setProductID(productid);
             cart.setQuantity(quantity);
             int status = cartDao.create(cart);

@@ -1,10 +1,7 @@
 package com.cloud.Controllers;
 
 import com.cloud.Daos.*;
-import com.cloud.Models.Cart;
-import com.cloud.Models.Invoice;
-import com.cloud.Models.Product;
-import com.cloud.Models.User;
+import com.cloud.Models.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,8 +42,8 @@ public class OrderController extends HttpServlet {
     }
 
     protected void createNewOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession(false).getAttribute("userLogin");
-        int userId = user.getUserID();
+        //User user = (User) req.getSession(false).getAttribute("userLogin");
+        int userId = Session.userID;
         int typePayment = Integer.parseInt(req.getParameter("typepayment"));
         double total = Double.parseDouble(req.getParameter("amount"));
 
