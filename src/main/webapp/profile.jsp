@@ -20,19 +20,11 @@
 </head>
 
 <body>
-  
+
 <jsp:include page="./header_admin.jsp" />
 
+<jsp:include page="homepage_navbar.jsp"/>
 
-%>
-    <jsp:include page="admin_navbar.jsp"/>
-<%
-    }else{
-%>
-    <jsp:include page="homepage_navbar.jsp"/>
-<%
-    };
-%>
 <!--Header-->
 <header id="main-header" class="py-2 bg-primary text-white">
     <div class="container">
