@@ -1,6 +1,7 @@
 <%@ page import="com.cloud.Models.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.cloud.Models.Session" %>
 <html lang="en">
 
 <head>
@@ -26,10 +27,10 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" />
     <%
-        String name = "";
-        User userLogin = (User) request.getSession().getAttribute("userLogin");
-        if(userLogin!= null){
-            name = userLogin.getFullName();
+        String name ="" ;
+
+        if(Session.fullName!= null){
+            name = Session.fullName;
         }
         String action = request.getParameter("action");
         if(action == null) action = "";
