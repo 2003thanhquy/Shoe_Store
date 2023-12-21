@@ -63,7 +63,7 @@ public class CategoryController extends HttpServlet{
     }
     private void ListCategory(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        HttpSession session = request.getSession();
+        //HttpSession session = request.getSession();
         List<Category> listcategory = categoryDao.getAllCategory();
         request.setAttribute("listcategory", listcategory);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/categories.jsp");
@@ -88,8 +88,8 @@ public class CategoryController extends HttpServlet{
         java.sql.Date DateAdd = java.sql.Date.valueOf(DateAddString);
 
         Category category = new Category(CategoryID , CategoryName, DateAdd );
-        HttpSession session = request.getSession();
-        session.setAttribute("category", category);
+        //HttpSession session = request.getSession();
+        request.setAttribute("category", category);
         categoryDao.updateCategory(category);
         List<Category> listcategory = categoryDao.getAllCategory();
         request.setAttribute("listcategory", listcategory);
@@ -103,7 +103,7 @@ public class CategoryController extends HttpServlet{
     private void Delete_Category(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
         categoryDao.Delete_Category(CategoryID);
-        HttpSession session = request.getSession();
+        //HttpSession session = request.getSession();
         List<Category> listcategory = categoryDao.getAllCategory();
         request.setAttribute("listcategory", listcategory);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/categories.jsp");
@@ -121,7 +121,7 @@ public class CategoryController extends HttpServlet{
         java.sql.Date DateAdd = java.sql.Date.valueOf(DateAddString);
         Category category = new Category(CategoryName, DateAdd);
         categoryDao.Insert_Category(category);
-        HttpSession session = request.getSession();
+        //HttpSession session = request.getSession();
         List<Category> listcategory = categoryDao.getAllCategory();
         request.setAttribute("listcategory", listcategory);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/categories.jsp");
