@@ -32,7 +32,7 @@
     </div>
 </header>
 
-<!--Actions-->
+<!--Actions
 <section id="actions" class="py-4 mb-4 bg-light">
     <div class="container">
         <div class="row">
@@ -45,7 +45,7 @@
         </div>
     </div>
 </section>
-
+-->
 <!--Posts-->
 <section id="posts">
     <div class="container">
@@ -78,11 +78,11 @@
                                     <i class="fas fa-angle-double-right"></i> Details
                                 </a>
                             </td>
-                            <td>
+                            <!--<td>
                                 <a href="delete_product?ProductID=<c:out value='${product.productID}' />" class="btn btn-secondary" style="background-color:indianred">
                                     <i class="fas fa-angle-double-right"></i> Delete
                                 </a>
-                            </td>
+                            </td>-->
                         </tr>
                         </c:forEach>
                         <!---Post 1--->
@@ -97,7 +97,7 @@
                         <h4 class="display-4">
                             <i class="fas fa-pencil-alt"></i> 6
                         </h4>
-                        <a href="posts.jsp" class="btn btn-outline-light btn-sm">View</a>
+                        <a href="<%= request.getContextPath() %>/pro/list_product" class="btn btn-outline-light btn-sm">View</a>
                     </div>
                 </div>
 
