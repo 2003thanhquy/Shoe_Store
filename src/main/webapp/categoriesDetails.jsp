@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.cloud.Models.Category" %><%--
   Created by IntelliJ IDEA.
   User: Asus ROG
   Date: 12/3/2023
@@ -52,6 +52,9 @@
 
 <!--Details-->
 <!--Details-->
+<%
+  Category category = (Category) request.getAttribute("category");
+%>
 <section id="details">
   <div class="container">
     <div class="row">
@@ -65,16 +68,16 @@
               <input type="hidden" name="from" value="CategoryDetails">
               <div class="form-group">
                 <label for="CategoryID">Category ID</label>
-                <input readonly type="text" value="<c:out value='${category.categoryID}' />" id = "CategoryID" name ="CategoryID"  class="form-control">
+                <input readonly type="text" value="<c:out value='<%=category.getCategoryID()%>' />" id = "CategoryID" name ="CategoryID"  class="form-control">
               </div>
 
               <div class="form-group">
                 <label for="CategoryName">Category Name </label>
-                <input type="text" value="${category.categoryName}" id = "CategoryName" name ="CategoryName" class="form-control">
+                <input type="text" value="<%=category.getCategoryName()%>" id = "CategoryName" name ="CategoryName" class="form-control">
               </div>
               <div class="form-group">
                 <label for="DateAdd">Date Add</label>
-                <input type="date" value="${category.dateAdd}" id = "DateAdd"  name ="DateAdd" class="form-control">
+                <input type="date" value="<%=category.getDateAdd()%>" id = "DateAdd"  name ="DateAdd" class="form-control">
               </div>
 
               <div class="col-md-3">
