@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.cloud.Models.Session" %>
 <html lang="en">
 
 <head>
@@ -21,6 +22,15 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
+<%
+    String name ="" ;
+
+    if(Session.fullName!= null){
+        name = Session.fullName;
+    }
+    String action = request.getParameter("action");
+    if(action == null) action = "";
+%>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
     <div class="container">
         <a href="index.jsp" class="navbar-brand">Cloud Shop</a>
@@ -45,8 +55,12 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown mr-3">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <i class="fas fa-user"></i> Welcome Khanh
+                    <a
+                            href="#"
+                            class="nav-link dropdown-toggle"
+                            data-toggle="dropdown"
+                    >
+                        <i class="fas fa-user"></i> Welcome <%= name%>
                         <!--Placeholder Username-->
                     </a>
                     <div class="dropdown-menu">

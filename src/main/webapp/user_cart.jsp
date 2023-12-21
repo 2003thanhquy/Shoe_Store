@@ -123,7 +123,7 @@
                                         </label>
                                     </div>
 
-                                    <button type="submit" class="order-confirm btn btn-primary btn-block btn-lg">
+                                    <button type="submit" class="order-confirm btn btn-primary btn-block btn-lg w-auto">
                                         <div class="d-flex justify-content-between">
                                             <span>Confirm Order</span>
                                         </div>
