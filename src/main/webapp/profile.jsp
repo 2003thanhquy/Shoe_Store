@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.Base64"%>
+<%@ page import="com.cloud.Models.Session" %>
+<%@ page import="com.cloud.Daos.UserDao" %>
 <html lang="en">
 
 <head>
@@ -21,9 +23,25 @@
 
 <body>
 
+<%
+    int  userid = Session.userID;
+    User userLogin = new UserDao().selectUserById(userid);
+%>
+
 <jsp:include page="./header_admin.jsp" />
 
 <jsp:include page="homepage_navbar.jsp"/>
+
+
+<%--%>--%>
+<%--    <jsp:include page="admin_navbar.jsp"/>--%>
+<%--<%--%>
+<%--    }else{--%>
+<%--%>--%>
+<%--    <jsp:include page="homepage_navbar.jsp"/>--%>
+<%--<%--%>
+<%--    };--%>
+<%--%>--%>
 
 <!--Header-->
 <header id="main-header" class="py-2 bg-primary text-white">
@@ -68,41 +86,41 @@
                             <input type="hidden" name="from" value="profile">
                             <div class="form-group">
                                 <label for="UserID">User ID</label>
-                                <input readonly type="text" value="${userLogin.userID}" id = "UserID" name ="UserID"  class="form-control">
+                                <input readonly type="text" value="<%=userLogin.getUserID()%>" id = "UserID" name ="UserID"  class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="FullName">Name</label>
-                                <input type="text" id="FullName" name="FullName" class="form-control" value="${userLogin.fullName}">
+                                <input type="text" id="FullName" name="FullName" class="form-control" value="<%=userLogin.getFullName()%>">
                             </div>
                             <div class="form-group">
                                 <label for="Email">Email</label>
-                                <input type="email" value="${userLogin.email}" id = "Email"  name = "Email" class="form-control">
+                                <input type="email" value="<%=userLogin.getEmail()%>" id = "Email"  name = "Email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="BirthDate">Birthday</label>
-                                <input type="date" value="${userLogin.birthDate}" id = "BirthDate"  name ="BirthDate" class="form-control">
+                                <input type="date" value="$<%=userLogin.getBirthDate()%>" id = "BirthDate"  name ="BirthDate" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="Address">Address</label>
-                                <input type="text" value="${userLogin.address}" id = "Address"  name = "Address" class="form-control">
+                                <input type="text" value="<%=userLogin.getAddress()%>" id = "Address"  name = "Address" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="Phone">Phone</label>
-                                <input type="text" value="${userLogin.phone}" id = "Phone" name = "Phone" class="form-control">
+                                <input type="text" value="<%=userLogin.getPhone()%>" id = "Phone" name = "Phone" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="Role">Role</label>
                                 <select id="Role" class ="form-control" disabled>
-                                    <option value="Customer" ${userLogin.role == 'Customer' ? 'selected' : ''}>Customer</option>
-                                    <option value="Manager" ${userLogin.role == 'Manager' ? 'selected' : ''}>Manager</option>
-                                    <input type="hidden" name="Role" value="${userLogin.role}">
+                                    <option value="Customer" <%=userLogin.getRole().equals("Customer") ? "selected" : ""%>>Customer</option>
+                                    <option value="Manager" <%=userLogin.getRole().equals("Manager") ? "selected" : ""%>>Manager</option>
+                                    <input type="hidden" name="Role" value="<%=userLogin.getRole()%>">
                                 </select>
                             </div>
                             <!-- Hình ảnh -->
-                            <input type="hidden" name="encodedImage" id="encodedImage" value="${Base64.getEncoder().encodeToString(userLogin.getAvatar())}">
+                            <input type="hidden" name="encodedImage" id="encodedImage" value="<%=Base64.getEncoder().encodeToString(userLogin.getAvatar())%>">
                             <div class="col-md-12 d-flex flex-column justify-content-center">
                                 <div class="mb-3 text-center" style="height: 200px;">
-                                    <img id="image" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(userLogin.getAvatar())}"
+                                    <img id="image" src="data:image/jpeg;base64,<%=Base64.getEncoder().encodeToString(userLogin.getAvatar())%>"
                                          alt="Hình ảnh" class="img-fluid mx-auto d-block mw-100 mh-100">
                                 </div>
                                 <div class="text-center"><input type="file" id="selectImage" accept="image/*"></div>
