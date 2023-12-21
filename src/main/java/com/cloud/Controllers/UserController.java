@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.cloud.Models.Session;
 import com.cloud.Models.User;
 import com.cloud.Daos.UserDao;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
@@ -128,8 +129,14 @@ public class UserController extends HttpServlet{
         if(id != -1)
         {
             user = userDao.selectUserById(id);
-            HttpSession session = request.getSession();
-            session.setAttribute("userLogin", user);
+//            HttpSession session = request.getSession();
+//            session.setAttribute("userLogin", user);
+            Session.userID = user.getUserID();
+            Session.fullName = user.getFullName();
+            Session.email = user.getEmail();
+            Session.password = user.getPassword();
+            Session.role = user.getRole();
+            Session.avatar = user.getAvatar();
             if(user.getRole().equals("Manager") || user.getRole().equals("manager"))
                 //response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
                 response.sendRedirect(request.getContextPath() + "/pro/list_product");
