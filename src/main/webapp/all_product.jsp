@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html lang="en">
 
 <head>
@@ -57,11 +58,13 @@
 
                                 <!-- Product price-->
                                 <c:if test="${product.discount != 0}">
-                                    <span class="text-muted text-decoration-line-through"
-                                    >$${product.price}</span
-                                    >
+                                <span class="text-muted text-decoration-line-through">
+                                <fmt:formatNumber value="${product.price}" type="number" pattern="#,##0.##" />VNĐ
+                                </span>
                                 </c:if>
-                                $${(100 - product.discount) * product.price / 100}
+                                <!-- Làm tròn giá nếu có giảm giá -->
+                                <fmt:formatNumber value="${(100 - product.discount) * product.price / 100}" type="number" pattern="#,##0.##" />
+                                VNĐ
                             </div>
                         </div>
                         <!-- Product actions-->

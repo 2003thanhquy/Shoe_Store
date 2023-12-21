@@ -28,20 +28,21 @@
     User userLogin = new UserDao().selectUserById(userid);
 %>
 
-<jsp:include page="./header_admin.jsp" />
+<%
+if (userLogin.getRole().equals("Manager"))
+{
 
-<jsp:include page="homepage_navbar.jsp"/>
 
+%>
 
-<%--%>--%>
-<%--    <jsp:include page="admin_navbar.jsp"/>--%>
-<%--<%--%>
-<%--    }else{--%>
-<%--%>--%>
-<%--    <jsp:include page="homepage_navbar.jsp"/>--%>
-<%--<%--%>
-<%--    };--%>
-<%--%>--%>
+<jsp:include page="admin_navbar.jsp"/>
+<%
+    }else{
+%>
+    <jsp:include page="homepage_navbar.jsp"/>
+<%
+    };
+%>
 
 <!--Header-->
 <header id="main-header" class="py-2 bg-primary text-white">
