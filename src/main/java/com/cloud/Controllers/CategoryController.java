@@ -45,12 +45,16 @@ public class CategoryController extends HttpServlet{
                     break;
                 case "/ShowFormEdit_Categories":
                     ShowCategoriesDetails(request, response);
+                    break;
                 case "/update_Category":
                     Update_Category(request, response);
+                    break;
                 case "/delete_Categories":
                     Delete_Category(request, response);
+                    break;
                 case "/Insert_Categories":
                     Insert_Categories(request, response);
+                    break;
 
                 default:
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/categories.jsp");
@@ -72,7 +76,12 @@ public class CategoryController extends HttpServlet{
 
     private void ShowCategoriesDetails(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
+        int CategoryID = 1;
+        try {
+            CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
+        } catch (NumberFormatException e) {
+            CategoryID = 1;
+        }
         Category categoryexist = categoryDao.selectCategoryByID(CategoryID);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/categoriesDetails.jsp");
 
@@ -102,7 +111,11 @@ public class CategoryController extends HttpServlet{
     }
     private void Delete_Category(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
-        categoryDao.Delete_Category(CategoryID);
+        try {
+            categoryDao.Delete_Category(CategoryID);
+        }catch (SQLException ex)
+        {
+        }
         //HttpSession session = request.getSession();
         List<Category> listcategory = categoryDao.getAllCategory();
         request.setAttribute("listcategory", listcategory);

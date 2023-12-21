@@ -116,7 +116,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="login.jsp" class="nav-link">
+                    <a href="<%=request.getContextPath()%>/user/logout_UserController" class="nav-link">
                         <i class="fas fa-user-times"></i> Logout
                     </a>
                 </li>
