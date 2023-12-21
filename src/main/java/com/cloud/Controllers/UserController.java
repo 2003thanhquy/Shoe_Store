@@ -78,7 +78,6 @@ public class UserController extends HttpServlet{
     }
     private void listUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        HttpSession session = request.getSession();
         List < User > listUser = userDao.getAllUsers();
         request.setAttribute("listUser", listUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/users.jsp");
@@ -129,8 +128,6 @@ public class UserController extends HttpServlet{
         if(id != -1)
         {
             user = userDao.selectUserById(id);
-//            HttpSession session = request.getSession();
-//            session.setAttribute("userLogin", user);
             Session.userID = user.getUserID();
             Session.fullName = user.getFullName();
             Session.email = user.getEmail();
@@ -138,7 +135,6 @@ public class UserController extends HttpServlet{
             Session.role = user.getRole();
             Session.avatar = user.getAvatar();
             if(user.getRole().equals("Manager") || user.getRole().equals("manager"))
-                //response.sendRedirect(request.getContextPath()+"/index_admin.jsp");
                 response.sendRedirect(request.getContextPath() + "/pro/dashboard");
             else
                 response.sendRedirect(request.getContextPath()+"/home");
@@ -186,8 +182,8 @@ public class UserController extends HttpServlet{
         updateuser.setAvatar(imageBytes);
         userDao.updateUser(updateuser);
         User user = userDao.selectUserById(userID);
-        HttpSession session = request.getSession();
-        session.setAttribute("userLogin", user);
+        request.setAttribute("userLogin", user);
+        Session.userID = user.getUserID();
         String from = request.getParameter("from");
         if ("profile".equals(from)) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
@@ -201,7 +197,6 @@ public class UserController extends HttpServlet{
         }
     }
     private void updatePasswordProfile(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        HttpSession session = request.getSession();
         String encodedNewPassword = request.getParameter("newPassword");
         String encodedUserID = request.getParameter("userID");
 
@@ -218,7 +213,8 @@ public class UserController extends HttpServlet{
             resultMsg = "Update password fail";
         User user = userDao.selectUserById(userID);
 
-        session.setAttribute("userLogin", user);
+        request.setAttribute("userLogin", user);
+        Session.userID = user.getUserID();
         request.setAttribute("resultMsg",resultMsg);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
         try{
