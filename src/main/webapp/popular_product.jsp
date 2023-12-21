@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.util.Base64"%>
 <html lang="en">
 
 <head>
@@ -49,7 +50,8 @@
                             </div>
                         </c:if>
                         <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        <img class="card-img-top" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(product.getImage())}"
+                             alt="..." />
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
