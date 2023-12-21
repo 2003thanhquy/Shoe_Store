@@ -68,7 +68,7 @@ public class ProductDao {
                 product.setImage(rs.getBytes("Image"));
                 product.setDateAdd(rs.getDate("DateAdd"));
                 product.setCategoryID(rs.getInt("CategoryID"));
-                product.setPrice(rs.getBigDecimal("Rate"));
+                product.setRate(rs.getBigDecimal("Rate"));
                 products.add(product);
             }
         } catch (SQLException e) {
