@@ -95,7 +95,7 @@
                     <div class="card-body">
                         <h3>Posts</h3>
                         <h4 class="display-4">
-                            <i class="fas fa-pencil-alt"></i> 6
+                            <i class="fas fa-pencil-alt"></i>
                         </h4>
                         <a href="<%= request.getContextPath() %>/pro/list_product" class="btn btn-outline-light btn-sm">View</a>
                     </div>
@@ -105,7 +105,7 @@
                     <div class="card-body">
                         <h3>Categories</h3>
                         <h4 class="display-4">
-                            <i class="fas fa-folder"></i> 4
+                            <i class="fas fa-folder"></i>
                         </h4>
                         <a  href="<%= request.getContextPath() %>/category/list_Category" class="btn btn-outline-light btn-sm">View</a>
                     </div>
@@ -115,7 +115,7 @@
                     <div class="card-body">
                         <h3>Users</h3>
                         <h4 class="display-4">
-                            <i class="fas fa-users"></i> 4
+                            <i class="fas fa-users"></i>
                         </h4>
                         <a href="<%= request.getContextPath() %>/user/list_UserController"
                            class="btn btn-outline-light btn-sm">View</a>
