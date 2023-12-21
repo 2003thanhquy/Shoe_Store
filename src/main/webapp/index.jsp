@@ -51,9 +51,12 @@
                                 Sale
                             </div>
                         </c:if>
-                        <!-- Product image-->
-                        <img class="card-img-top" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(product.getImage())}"
-                             alt="..." />
+                        <!-- Product image--><c:if test="${product.image==null}">
+                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                    </c:if><c:if test="${product.image!=null}">
+                        <img class="card-img-top" src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(product.getImage())}" alt="..." />
+                    </c:if>
+
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
