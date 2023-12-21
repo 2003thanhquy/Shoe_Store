@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.cloud.Models.User" %>
+<%@ page import="com.cloud.Models.Session" %>
 <html>
 <body>
-<c:if test="${empty sessionScope.userLogin}">
+<c:if test="${empty Session.email}">
     <c:set var="errMsg" value="You need to login first" />
     <c:redirect url="./login.jsp" />
 </c:if>
@@ -26,13 +27,16 @@
                 </li>
                 <li class="nav-item px-2">
                     <a href="<%= request.getContextPath() %>/user/list_UserController" class="nav-link">Users</a>
-                </li>
+                </li><li class="nav-item px-2">
+                <a href="<%= request.getContextPath() %>/admin/invoice" class="nav-link">Invoices</a>
+            </li>
+
             </ul>
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown mr-3">
                     <a href="./index_admin.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <i class="fas fa-user"></i> ${userLogin.getFullName()}
+                        <i class="fas fa-user"></i> ${Session.fullName}
                     </a>
                     <div class="dropdown-menu">
                         <a href="./profile.jsp" class="dropdown-item">

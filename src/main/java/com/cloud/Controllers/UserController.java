@@ -243,9 +243,12 @@ public class UserController extends HttpServlet{
     }
     private void logout(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+        Session.userID = -1;
+        Session.fullName =null;
+        Session.email = null;
+        Session.password = null;
+        Session.role = null;
+        Session.avatar = null;
         response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
 }
