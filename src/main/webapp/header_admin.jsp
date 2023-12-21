@@ -35,11 +35,11 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown mr-3">
-                    <a href="./index_admin.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <a href="<%= request.getContextPath() %>/index_admin.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <i class="fas fa-user"></i> ${Session.fullName}
                     </a>
                     <div class="dropdown-menu">
-                        <a href="./profile.jsp" class="dropdown-item">
+                        <a href="<%= request.getContextPath() %>/profile.jsp" class="dropdown-item">
                             <i class="fas fa-user-circle"></i> Profile
                         </a>
                     </div>
