@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 @WebServlet("/pro/*")
 public class ProductController extends HttpServlet {
@@ -90,11 +91,13 @@ public class ProductController extends HttpServlet {
         String Price = request.getParameter("Price");
         BigDecimal price = new BigDecimal(Price);
         int Stock = Integer.parseInt(request.getParameter("Stock"));
-        byte[] Image = request.getParameter("Image").getBytes();
+        String encodedImage = request.getParameter("encodedImage");
+        String base64Image = encodedImage.replaceAll("data:image/\\w+;base64,", "");
+        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
         int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
         String Rate = request.getParameter("Rate");
         BigDecimal rate = new BigDecimal(Rate);
-        Product product = new Product(productID,Name,Description,price,Stock,Image,dateAdd,CategoryID,rate);
+        Product product = new Product(productID,Name,Description,price,Stock,imageBytes,dateAdd,CategoryID,rate);
         productDao.updateProduct(product);
         response.sendRedirect("list_product");
     }
@@ -109,7 +112,7 @@ public class ProductController extends HttpServlet {
     }
 
     private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        request.setCharacterEncoding("UTF-8");
         String Name = request.getParameter("Name");
         String DateAdd = request.getParameter("DateAdd");
         java.sql.Date dateAdd = java.sql.Date.valueOf(DateAdd);
@@ -117,19 +120,18 @@ public class ProductController extends HttpServlet {
         String Price = request.getParameter("Price");
         BigDecimal price = new BigDecimal(Price);
         int Stock = Integer.parseInt(request.getParameter("Stock"));
-        byte[] Image = request.getParameter("Image").getBytes();
+        String encodedImage = request.getParameter("encodedImage");
+        String base64Image = encodedImage.replaceAll("data:image/\\w+;base64,", "");
+        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
         int CategoryID = Integer.parseInt(request.getParameter("CategoryID"));
         String Rate = request.getParameter("Rate");
         BigDecimal rate = new BigDecimal(Rate);
-        Product product = new Product(Name,Description,price,Stock,Image,dateAdd,CategoryID,rate);
+        Product product = new Product(Name,Description,price,Stock,imageBytes,dateAdd,CategoryID,rate);
         productDao.addProduct(product);
         response.sendRedirect("list_product");
     }
 
     private void listProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-        HttpSession session = request.getSession();
         List<Product> listProduct = productDao.getAllProducts();
         request.setAttribute("listProduct", listProduct);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/posts.jsp");

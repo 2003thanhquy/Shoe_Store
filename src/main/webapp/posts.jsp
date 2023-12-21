@@ -164,7 +164,8 @@
                     <div class="form-group">
                         <label for="image">Upload Image</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="Image" name = "Image">
+                            <input type="hidden" name="encodedImage" id="encodedImage" value="${Base64.getEncoder().encodeToString(Product.getImage())}">
+                            <input type="file" class="custom-file-input" id="Image" name="Image" onchange="handleImageChange()">
                             <label for="Image" class="custom-file-label">Choose File</label>
                         </div>
                         <small class="form-text text-muted">Max Size 3mb</small>
@@ -194,6 +195,29 @@
 <!--jQuery CDN-->
 <jsp:include page="./scripts.jsp" />
 <!--Custom JavaScript-->
+<script>
+    function handleImageChange() {
+        var inputElement = document.getElementById('Image');
+        var files = inputElement.files;
+
+        if (files && files.length > 0) {
+            var reader = new FileReader();
+
+            reader.onload = function () {
+                var dataURL = reader.result;
+
+                if (dataURL != null) {
+                    document.getElementById('encodedImage').value = dataURL;
+                }
+            };
+
+            reader.readAsDataURL(files[0]);
+        } else {
+            console.error("No files selected or FileReader not supported.");
+        }
+    }
+
+</script>
 </body>
 
 </html>
